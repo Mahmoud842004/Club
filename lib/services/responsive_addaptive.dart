@@ -22,6 +22,7 @@ class ResponsiveAddaptive {
     if (platformcondition && orientation == Orientation.landscape) {
       return ScreenData(screensize: size, screentype: ScreenType.landscape);
     } else if (size.width >= 1200) {
+      print(size.width);
       return ScreenData(screensize: size, screentype: ScreenType.web);
     } else {
       return ScreenData(screensize: size, screentype: ScreenType.phone);

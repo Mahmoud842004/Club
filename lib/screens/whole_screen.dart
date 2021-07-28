@@ -8,8 +8,8 @@ class WholeScreen extends StatelessWidget {
   const WholeScreen();
   @override
   Widget build(BuildContext context) {
-    var authprovider = Provider.of<User>(context);
-    if (authprovider.runtimeType == User) {
+    var authprovider = Provider.of<User?>(context);
+    if (authprovider == null) {
       return LoginScreen();
     } else {
       return HomeScreen();

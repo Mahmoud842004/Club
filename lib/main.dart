@@ -1,10 +1,13 @@
 import 'package:auto_direction/auto_direction.dart';
-import 'package:club/constants.dart';
+import 'package:club/screens/whole_screen.dart';
+import 'package:club/services/auth.dart';
 import 'package:club/services/responsive_addaptive.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +19,8 @@ void main() async {
         Locale('en', 'US'),
         Locale('ar', 'EG'),
       ],
-      path: 'lang/',
+      path: 'lang',
+      assetLoader: RootBundleAssetLoader(),
       fallbackLocale: Locale('en', 'US'),
       saveLocale: true,
       child: MyApp(),
@@ -25,30 +29,42 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     var text = context.locale == Locale('en', 'US') ? 'a' : 'ا';
-    return AutoDirection(
-      text: text,
-      child: ResponsiveAddaptive.isios()
-          ? CupertinoApp(
-              title: 'Club',
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              localizationsDelegates: context.localizationDelegates,
-              initialRoute: '/',
-              routes: routes,
-            )
-          : MaterialApp(
-              title: 'Club',
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              localizationsDelegates: context.localizationDelegates,
-              initialRoute: '/',
-              routes: routes,
-            ),
+    var user = Auth().getcurrentuser();
+    return MultiProvider(
+      providers: [
+        Provider<User?>.value(value: user),
+      ],
+      child: Builder(
+        builder: (context) {
+          return AutoDirection(
+            text: text,
+            child: ResponsiveAddaptive.isios()
+                ? CupertinoApp(
+                    title: 'Club',
+                    supportedLocales: context.supportedLocales,
+                    locale: context.locale,
+                    localizationsDelegates: context.localizationDelegates,
+                    initialRoute: '/',
+                    routes: {
+                      '/': (context) => WholeScreen(),
+                    },
+                  )
+                : MaterialApp(
+                    title: 'Club',
+                    supportedLocales: context.supportedLocales,
+                    locale: context.locale,
+                    localizationsDelegates: context.localizationDelegates,
+                    initialRoute: '/',
+                    routes: {
+                      '/': (context) => WholeScreen(),
+                    },
+                  ),
+          );
+        },
+      ),
     );
   }
 }
