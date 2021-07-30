@@ -1,0 +1,12 @@
+{
+    "sign in": "Sign in",
+    "login": "Login",
+    "email": "Email",
+    "email hint text": "Enter your email",
+    "password": "Password",
+    "password hint text": "Enter your password",
+    "username": "Username",
+    "username hint text": "Enter your username",
+    "login switch text": "I already have an account",
+    "sign in switch text": "Create an account"
+}

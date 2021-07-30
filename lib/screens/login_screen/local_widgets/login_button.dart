@@ -1,4 +1,5 @@
 import 'package:club/models/auth_type.dart';
+import 'package:club/models/screendata.dart';
 import 'package:club/services/responsive_addaptive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,13 @@ class LoginButton extends StatelessWidget {
     var screendata = ResponsiveAddaptive.screendata(context);
     return InkWell(
       child: Container(
-        height: screendata.screensize.height*0.05,
+        height: screendata.screentype == ScreenType.landscape &&
+                authtype == AuthType.login
+            ? screendata.screensize.height * 0.1
+            : screendata.screentype == ScreenType.landscape &&
+                    authtype == AuthType.signin
+                ? screendata.screensize.height * 0.042
+                : screendata.screensize.height * 0.05,
         width: screendata.screensize.width * 0.4,
         decoration: BoxDecoration(
           color: theme['black'],
@@ -25,8 +32,13 @@ class LoginButton extends StatelessWidget {
             ? Icon(
                 CupertinoIcons.checkmark_alt,
                 color: theme['white'],
+                size: screendata.screentype == ScreenType.landscape ? 15 : 24,
               )
-            : Icon(Icons.done, color: theme['white']),
+            : Icon(
+                Icons.done,
+                color: theme['white'],
+                size: screendata.screentype == ScreenType.landscape ? 15 : 24,
+              ),
       ),
     );
   }

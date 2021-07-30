@@ -31,15 +31,26 @@ dependencies:
   firebase_core: ^1.4.0
   firebase_storage: ^10.0.1
   provider: ^5.0.0
-  animated_text_kit: ^4.2.1
   google_fonts: ^2.1.0
   flutter_signin_button: ^2.0.0
   font_awesome_flutter: ^9.1.0
+  
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.9.1"
+  flutter_native_splash: ^1.2.0
   flutter_test:
     sdk: flutter
-
+flutter_native_splash:
+  andriod: true
+  ios: true 
+  web: false
+  color: "#FFFFFF"
+  image: assets/logo.jfif
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo.jfif"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
@@ -51,8 +62,8 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lang/en-US.json
-    - lang/ar-EG.json
+    - lang/en.json
+    - lang/ar.json
     - assets/
     
   # An image asset can refer to one or more resolution-specific "variants", see

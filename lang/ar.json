@@ -1,0 +1,12 @@
+{
+    "sign in": "انشاء حساب",
+    "login": "تسجيل الدخول",
+    "email": "البريد الإلكتروني",
+    "email hint text": "أدخل بريدك الإلكتروني",
+    "password": "كلمه السر",
+    "password hint text": "ادخل كلمة السر",
+    "username": "اسم االمستخدم",
+    "username hint text": "أدخل اسم المستخدم الخاص بك",
+    "login switch text": "لدي حساب بالفعل",
+    "sign in switch text": "انشئ حساب"
+}

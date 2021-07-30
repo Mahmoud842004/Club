@@ -1,8 +1,8 @@
-import 'package:club/constants.dart';
 import 'package:club/models/auth_type.dart';
 import 'package:club/models/screendata.dart';
 import 'package:club/screens/login_screen/local_widgets/external_signin_row.dart';
 import 'package:club/screens/login_screen/local_widgets/login_button.dart';
+import 'package:club/screens/login_screen/local_widgets/switchtext.dart';
 import 'package:club/screens/login_screen/local_widgets/text_field.dart';
 import 'package:club/screens/login_screen/local_widgets/title_text.dart';
 import 'package:club/screens/login_screen/local_widgets/username_textfield.dart';
@@ -43,88 +43,106 @@ class _LoginBodyState extends State<LoginBody> {
   @override
   Widget build(BuildContext context) {
     var screendata = ResponsiveAddaptive.screendata(context);
-    return SingleChildScrollView(
-      child: Form(
-        child: Container(
-          width: screendata.screensize.width,
-          height: screendata.screensize.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TitleText(authtype: authtype),
-              LoginTextField(
-                nextnode: passwordnode,
-                text: 'Email',
-                authType: authtype,
-                focusNode: emailnode,
-                controller: emailcontroller,
-                hinttext: 'Enter your email',
-                obscure: false,
-                icon: ResponsiveAddaptive.isios()
-                    ? Icon(
-                        CupertinoIcons.mail,
-                        color: Colors.grey[400],
-                      )
-                    : Icon(
-                        Icons.email,
-                        color: Colors.grey[400],
-                      ),
-              ),
-              LoginTextField(
-                nextnode: authtype == AuthType.login ? null : usernamenode,
-                text: 'Password',
-                authType: authtype,
-                focusNode: passwordnode,
-                controller: passwordcontroller,
-                hinttext: 'Enter your Password',
-                obscure: true,
-                icon: ResponsiveAddaptive.isios()
-                    ? Icon(
-                        CupertinoIcons.lock_fill,
-                        color: Colors.grey[400],
-                      )
-                    : Icon(
-                        Icons.lock,
-                        color: Colors.grey[400],
-                      ),
-              ),
-              UsernameTextField(
-                authtype: authtype,
-                node: usernamenode,
-                controller: usernamecontroller,
-              ),
-              LoginButton(authtype: authtype),
-              SizedBox(
-                height: screendata.screensize.height * 0.04,
-              ),
-              ExternalSigninRow(),
-              SizedBox(
-                height: screendata.screensize.height * 0.05,
-              ),
-              InkWell(
-                onTap: () {
-                  if (authtype == AuthType.login) {
-                    setState(() {
-                      authtype = AuthType.signin;
-                    });
-                  } else {
-                    setState(() {
-                      authtype = AuthType.login;
-                    });
-                  }
-                },
-                child: Text(
-                  authtype == AuthType.login
-                      ? 'Create an account'
-                      : 'I aready have an account',
-                  style: TextStyle(color: theme['violet']),
+    return ListView(
+      children: [
+        Form(
+          key: formkey,
+          child: Container(
+            width: screendata.screensize.width,
+            height: screendata.screensize.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TitleText(authtype: authtype),
+                LoginTextField(
+                  validator: (value) {
+                    if (value!.contains('@email.com')) {
+                      return 'This email is badly formated';
+                    }
+                    return null;
+                  },
+                  nextnode: passwordnode,
+                  text: 'email',
+                  authType: authtype,
+                  focusNode: emailnode,
+                  controller: emailcontroller,
+                  hinttext: 'email hint text',
+                  obscure: false,
+                  icon: ResponsiveAddaptive.isios()
+                      ? Icon(
+                          CupertinoIcons.mail,
+                          color: Colors.grey[400],
+                        )
+                      : Icon(
+                          Icons.email,
+                          color: Colors.grey[400],
+                        ),
                 ),
-              ),
-            ],
+                LoginTextField(
+                  validator: (value) {
+                    if (value!.split('').length < 4) {
+                      return 'This passowrd is too short';
+                    }
+                    return null;
+                  },
+                  nextnode: authtype == AuthType.login ? null : usernamenode,
+                  text: 'password',
+                  authType: authtype,
+                  focusNode: passwordnode,
+                  controller: passwordcontroller,
+                  hinttext: 'password hint text',
+                  obscure: true,
+                  icon: ResponsiveAddaptive.isios()
+                      ? Icon(
+                          CupertinoIcons.lock_fill,
+                          color: Colors.grey[400],
+                        )
+                      : Icon(
+                          Icons.lock,
+                          color: Colors.grey[400],
+                        ),
+                ),
+                UsernameTextField(
+                  authtype: authtype,
+                  node: usernamenode,
+                  controller: usernamecontroller,
+                ),
+                SizedBox(
+                  height: screendata.screentype == ScreenType.landscape
+                      ? screendata.screensize.height * 0.02
+                      : screendata.screensize.height * 0.04,
+                ),
+                LoginButton(authtype: authtype),
+                SizedBox(
+                  height: screendata.screentype == ScreenType.landscape
+                      ? screendata.screensize.height * 0.02
+                      : screendata.screensize.height * 0.04,
+                ),
+                ExternalSigninRow(),
+                SizedBox(
+                  height: screendata.screentype == ScreenType.landscape &&
+                          authtype == AuthType.signin
+                      ? 0.0
+                      : screendata.screentype == ScreenType.landscape
+                          ? screendata.screensize.height * 0.02
+                          : screendata.screensize.height * 0.04,
+                ),
+                SwitchText(
+                  authtype: authtype,
+                  setstate: (newauthtype) {
+                    setState(
+                      () {
+                        authtype = newauthtype;
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

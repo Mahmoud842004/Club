@@ -23,13 +23,14 @@ Map textstyles = {
       color: Colors.grey,
     ),
   ),
-  'login button style':GoogleFonts.merriweather(
+  'login button style': GoogleFonts.merriweather(
     textStyle: TextStyle(
       fontSize: 15,
       color: theme['white'],
     ),
   ),
 };
+
 
 InputDecoration decoration = InputDecoration(
   focusColor: Colors.grey[400],

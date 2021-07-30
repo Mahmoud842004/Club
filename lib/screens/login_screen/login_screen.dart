@@ -14,8 +14,6 @@ class LoginScreen extends StatelessWidget {
       body: screendata.screentype == ScreenType.web
           ? SafeArea(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     flex: 3,
@@ -24,8 +22,8 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: LoginBody(screendata: screendata),
                     flex: 2,
+                    child: LoginBody(screendata: screendata),
                   ),
                 ],
               ),

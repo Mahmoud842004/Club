@@ -1,4 +1,3 @@
-
 class Users {
   final String id;
   final String name;
@@ -6,8 +5,6 @@ class Users {
   final String backgroundimage;
   final bool isonline;
   final List stories;
-  final List following;
-  final List followers;
   final List posts;
 
   Users({
@@ -17,8 +14,6 @@ class Users {
     required this.backgroundimage,
     required this.isonline,
     required this.stories,
-    required this.followers,
-    required this.following,
     required this.posts,
   });
 }

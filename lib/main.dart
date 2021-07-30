@@ -16,12 +16,13 @@ void main() async {
   runApp(
     EasyLocalization(
       supportedLocales: [
-        Locale('en', 'US'),
-        Locale('ar', 'EG'),
+        Locale('en'),
+        Locale('ar'),
       ],
       path: 'lang',
+      useOnlyLangCode: true,
       assetLoader: RootBundleAssetLoader(),
-      fallbackLocale: Locale('en', 'US'),
+      fallbackLocale: Locale('en'),
       saveLocale: true,
       child: MyApp(),
     ),
@@ -31,7 +32,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var text = context.locale == Locale('en', 'US') ? 'a' : 'ا';
     var user = Auth().getcurrentuser();
     return MultiProvider(
       providers: [
@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) {
+          var text = context.locale == Locale('en') ? 'a' : 'ا';
           return AutoDirection(
             text: text,
             child: ResponsiveAddaptive.isios()
