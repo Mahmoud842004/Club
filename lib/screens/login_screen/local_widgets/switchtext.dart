@@ -22,6 +22,7 @@ class SwitchText extends StatelessWidget {
         authtype == AuthType.login
             ? 'sign in switch text'
             : 'login switch text',
+            textAlign: TextAlign.center,
         style: TextStyle(color: theme['black']),
       ).tr(),
     );

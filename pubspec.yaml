@@ -46,7 +46,7 @@ flutter_native_splash:
   ios: true 
   web: false
   color: "#FFFFFF"
-  image: assets/logo.jfif
+  image: assets/splash.png
 flutter_icons:
   android: true
   ios: true

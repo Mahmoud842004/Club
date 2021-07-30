@@ -1,6 +1,5 @@
 import 'package:club/constants.dart';
 import 'package:club/models/auth_type.dart';
-import 'package:club/models/screendata.dart';
 import 'package:club/services/responsive_addaptive.dart';
 import 'package:club/widgets/app_textfield.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +39,7 @@ class LoginTextField extends StatelessWidget {
           style: textstyles['login screen style'],
         ).tr(),
         AppTextFormField(
-          validator:validator,
+          validator: validator,
           focusNode: focusNode,
           obscure: obscure,
           controller: controller,
@@ -49,9 +48,7 @@ class LoginTextField extends StatelessWidget {
           icon: icon,
         ),
         SizedBox(
-          height: screendata.screentype == ScreenType.landscape
-              ? 0.0
-              : screendata.screensize.height * 0.03,
+          height: screendata.screensize.height * 0.03,
         )
       ],
     );

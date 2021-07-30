@@ -29,12 +29,7 @@ class LoginScreen extends StatelessWidget {
               ),
             )
           : SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: screendata.screensize.width * 0.04,
-                ),
-                child: LoginBody(screendata: screendata),
-              ),
+              child: LoginBody(screendata: screendata),
             ),
     );
   }

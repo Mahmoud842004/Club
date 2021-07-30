@@ -3,7 +3,7 @@ import 'package:club/models/screendata.dart';
 import 'package:club/screens/login_screen/local_widgets/external_signin_row.dart';
 import 'package:club/screens/login_screen/local_widgets/login_button.dart';
 import 'package:club/screens/login_screen/local_widgets/switchtext.dart';
-import 'package:club/screens/login_screen/local_widgets/text_field.dart';
+import 'package:club/screens/login_screen/local_widgets/login_textfield.dart';
 import 'package:club/screens/login_screen/local_widgets/title_text.dart';
 import 'package:club/screens/login_screen/local_widgets/username_textfield.dart';
 import 'package:club/services/responsive_addaptive.dart';
@@ -42,107 +42,93 @@ class _LoginBodyState extends State<LoginBody> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: change the size of splash screen image
+    // TODO: add functionalty for login screen
     var screendata = ResponsiveAddaptive.screendata(context);
-    return ListView(
-      children: [
-        Form(
-          key: formkey,
-          child: Container(
-            width: screendata.screensize.width,
-            height: screendata.screensize.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TitleText(authtype: authtype),
-                LoginTextField(
-                  validator: (value) {
-                    if (value!.contains('@email.com')) {
-                      return 'This email is badly formated';
-                    }
-                    return null;
-                  },
-                  nextnode: passwordnode,
-                  text: 'email',
-                  authType: authtype,
-                  focusNode: emailnode,
-                  controller: emailcontroller,
-                  hinttext: 'email hint text',
-                  obscure: false,
-                  icon: ResponsiveAddaptive.isios()
-                      ? Icon(
-                          CupertinoIcons.mail,
-                          color: Colors.grey[400],
-                        )
-                      : Icon(
-                          Icons.email,
-                          color: Colors.grey[400],
-                        ),
-                ),
-                LoginTextField(
-                  validator: (value) {
-                    if (value!.split('').length < 4) {
-                      return 'This passowrd is too short';
-                    }
-                    return null;
-                  },
-                  nextnode: authtype == AuthType.login ? null : usernamenode,
-                  text: 'password',
-                  authType: authtype,
-                  focusNode: passwordnode,
-                  controller: passwordcontroller,
-                  hinttext: 'password hint text',
-                  obscure: true,
-                  icon: ResponsiveAddaptive.isios()
-                      ? Icon(
-                          CupertinoIcons.lock_fill,
-                          color: Colors.grey[400],
-                        )
-                      : Icon(
-                          Icons.lock,
-                          color: Colors.grey[400],
-                        ),
-                ),
-                UsernameTextField(
-                  authtype: authtype,
-                  node: usernamenode,
-                  controller: usernamecontroller,
-                ),
-                SizedBox(
-                  height: screendata.screentype == ScreenType.landscape
-                      ? screendata.screensize.height * 0.02
-                      : screendata.screensize.height * 0.04,
-                ),
-                LoginButton(authtype: authtype),
-                SizedBox(
-                  height: screendata.screentype == ScreenType.landscape
-                      ? screendata.screensize.height * 0.02
-                      : screendata.screensize.height * 0.04,
-                ),
-                ExternalSigninRow(),
-                SizedBox(
-                  height: screendata.screentype == ScreenType.landscape &&
-                          authtype == AuthType.signin
-                      ? 0.0
-                      : screendata.screentype == ScreenType.landscape
-                          ? screendata.screensize.height * 0.02
-                          : screendata.screensize.height * 0.04,
-                ),
-                SwitchText(
-                  authtype: authtype,
-                  setstate: (newauthtype) {
-                    setState(
-                      () {
-                        authtype = newauthtype;
-                      },
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
+    var landscapecondition = screendata.screentype==ScreenType.landscape?true:false;
+    return Form(
+      key: formkey,
+      child: ListView(
+        padding: EdgeInsets.only(
+          top: screendata.screensize.height * 0.15,
+          left: screendata.screensize.width * 0.04,
+          right: screendata.screensize.width * 0.04,
         ),
-      ],
+        children: [
+          Align(
+            child: TitleText(authtype: authtype),
+            alignment: Alignment.topCenter,
+          ),
+          LoginTextField(
+            validator: (value) {
+              if (value!.contains('@email.com')) {
+                return 'This email is badly formated';
+              }
+              return null;
+            },
+            nextnode: passwordnode,
+            text: 'email',
+            authType: authtype,
+            focusNode: emailnode,
+            controller: emailcontroller,
+            hinttext: 'email hint text',
+            obscure: false,
+            icon: ResponsiveAddaptive.isios()
+                ? Icon(
+                    CupertinoIcons.mail,
+                    color: Colors.grey[400],
+                  )
+                : Icon(
+                    Icons.email,
+                    color: Colors.grey[400],
+                  ),
+          ),
+          LoginTextField(
+            validator: (value) {
+              if (value!.split('').length < 4) {
+                return 'This passowrd is too short';
+              }
+              return null;
+            },
+            nextnode: authtype == AuthType.login ? null : usernamenode,
+            text: 'password',
+            authType: authtype,
+            focusNode: passwordnode,
+            controller: passwordcontroller,
+            hinttext: 'password hint text',
+            obscure: true,
+            icon: ResponsiveAddaptive.isios()
+                ? Icon(
+                    CupertinoIcons.lock_fill,
+                    color: Colors.grey[400],
+                  )
+                : Icon(
+                    Icons.lock,
+                    color: Colors.grey[400],
+                  ),
+          ),
+          UsernameTextField(
+            authtype: authtype,
+            node: usernamenode,
+            controller: usernamecontroller,
+          ),
+          SizedBox(height: landscapecondition?screendata.screensize.height * 0.05:screendata.screensize.height * 0.02),
+          LoginButton(authtype: authtype),
+          SizedBox(height:landscapecondition?screendata.screensize.height*0.1: screendata.screensize.height * 0.04),
+          ExternalSigninRow(),
+          SizedBox(height:landscapecondition?screendata.screensize.height*0.08: screendata.screensize.height * 0.04),
+          SwitchText(
+            authtype: authtype,
+            setstate: (newauthtype) {
+              setState(
+                () {
+                  authtype = newauthtype;
+                },
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

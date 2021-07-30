@@ -14,16 +14,10 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screendata = ResponsiveAddaptive.screendata(context);
+    var landscapecondition = screendata.screentype==ScreenType.landscape?true:false;
     return InkWell(
       child: Container(
-        height: screendata.screentype == ScreenType.landscape &&
-                authtype == AuthType.login
-            ? screendata.screensize.height * 0.1
-            : screendata.screentype == ScreenType.landscape &&
-                    authtype == AuthType.signin
-                ? screendata.screensize.height * 0.042
-                : screendata.screensize.height * 0.05,
-        width: screendata.screensize.width * 0.4,
+        height:landscapecondition?screendata.screensize.height * 0.1:screendata.screensize.height * 0.05,
         decoration: BoxDecoration(
           color: theme['black'],
           borderRadius: BorderRadius.circular(40),
@@ -32,12 +26,12 @@ class LoginButton extends StatelessWidget {
             ? Icon(
                 CupertinoIcons.checkmark_alt,
                 color: theme['white'],
-                size: screendata.screentype == ScreenType.landscape ? 15 : 24,
+                size: 24,
               )
             : Icon(
                 Icons.done,
                 color: theme['white'],
-                size: screendata.screentype == ScreenType.landscape ? 15 : 24,
+                size: 24,
               ),
       ),
     );
