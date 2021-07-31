@@ -18,7 +18,7 @@ class UsernameTextField extends StatelessWidget {
     return AnimatedContainer(
       height: authtype == AuthType.login
           ? 0.0
-          : screendata.screentype==ScreenType.landscape?screendata.screensize.height * 0.22:screendata.screensize.height * 0.14,
+          : screendata.screentype==ScreenType.landscape?screendata.screensize.height * 0.3:screendata.screensize.height * 0.16,
       duration: Duration(milliseconds: 80),
       child: LoginTextField(
         validator: (value) {

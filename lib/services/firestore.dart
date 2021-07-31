@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 class FireStore {
   // users collection
   CollectionReference _users = FirebaseFirestore.instance.collection('users');
@@ -9,6 +10,7 @@ class FireStore {
       'profile image': null,
       'background image': null,
       'online': true,
+      'saved posts': [],
       'posts': [],
       'stories': [],
     });

@@ -33,10 +33,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO:enable the app for the web
-    // TODO:make splash screen for ios app
-    // TODO:make login button loading
-    //TODO:fix auth error
+    //TODO:enable the app for the web
     //TODO:make google and facebook auth
     var user = Auth().getcurrentuser();
     return MultiProvider(

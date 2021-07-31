@@ -42,7 +42,6 @@ class _LoginBodyState extends State<LoginBody> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: add functionalty for login screen
     var screendata = ResponsiveAddaptive.screendata(context);
     var landscapecondition =
         screendata.screentype == ScreenType.landscape ? true : false;
@@ -113,9 +112,10 @@ class _LoginBodyState extends State<LoginBody> {
             controller: usernamecontroller,
           ),
           SizedBox(
-              height: landscapecondition
-                  ? screendata.screensize.height * 0.05
-                  : screendata.screensize.height * 0.02),
+            height: landscapecondition
+                ? screendata.screensize.height * 0.05
+                : screendata.screensize.height * 0.02,
+          ),
           LoginButton(
             authtype: authtype,
             formkey: formkey,
@@ -123,11 +123,15 @@ class _LoginBodyState extends State<LoginBody> {
             password: passwordcontroller.text,
             username: usernamecontroller.text,
           ),
-          SizedBox(
-              height: landscapecondition
-                  ? screendata.screensize.height * 0.1
-                  : screendata.screensize.height * 0.04),
-          ExternalSigninRow(),
+          authtype == AuthType.signin
+              ? SizedBox(
+                  height: landscapecondition
+                      ? screendata.screensize.height * 0.1
+                      : screendata.screensize.height * 0.04)
+              : SizedBox.shrink(),
+          authtype == AuthType.signin
+              ? ExternalSigninRow()
+              : SizedBox.shrink(),
           SizedBox(
               height: landscapecondition
                   ? screendata.screensize.height * 0.08
