@@ -29,8 +29,13 @@ Map textstyles = {
       color: theme['white'],
     ),
   ),
+  'snack bar style': GoogleFonts.merriweather(
+    textStyle: TextStyle(
+      fontSize: 10,
+      color: theme['black'],
+    ),
+  ),
 };
-
 
 InputDecoration decoration = InputDecoration(
   focusColor: Colors.grey[400],

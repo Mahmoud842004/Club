@@ -1,4 +1,5 @@
 import 'package:auto_direction/auto_direction.dart';
+import 'package:club/models/material_pagetheme.dart';
 import 'package:club/screens/whole_screen.dart';
 import 'package:club/services/auth.dart';
 import 'package:club/services/responsive_addaptive.dart';
@@ -32,6 +33,11 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // TODO:enable the app for the web
+    // TODO:make splash screen for ios app
+    // TODO:make login button loading
+    //TODO:fix auth error
+    //TODO:make google and facebook auth
     var user = Auth().getcurrentuser();
     return MultiProvider(
       providers: [
@@ -48,10 +54,7 @@ class MyApp extends StatelessWidget {
                     supportedLocales: context.supportedLocales,
                     locale: context.locale,
                     localizationsDelegates: context.localizationDelegates,
-                    initialRoute: '/',
-                    routes: {
-                      '/': (context) => WholeScreen(),
-                    },
+                    home: WholeScreen(),
                   )
                 : MaterialApp(
                     title: 'Club',
@@ -59,8 +62,15 @@ class MyApp extends StatelessWidget {
                     locale: context.locale,
                     localizationsDelegates: context.localizationDelegates,
                     initialRoute: '/',
+                    theme: Theme.of(context).copyWith(
+                      pageTransitionsTheme: PageTransitionsTheme(
+                        builders: {
+                          TargetPlatform.android: AndriodPageTransition(),
+                        },
+                      ),
+                    ),
                     routes: {
-                      '/': (context) => WholeScreen(),
+                      WholeScreen.routename: (context) => WholeScreen(),
                     },
                   ),
           );

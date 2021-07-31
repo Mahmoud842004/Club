@@ -42,10 +42,10 @@ class _LoginBodyState extends State<LoginBody> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: change the size of splash screen image
     // TODO: add functionalty for login screen
     var screendata = ResponsiveAddaptive.screendata(context);
-    var landscapecondition = screendata.screentype==ScreenType.landscape?true:false;
+    var landscapecondition =
+        screendata.screentype == ScreenType.landscape ? true : false;
     return Form(
       key: formkey,
       child: ListView(
@@ -61,10 +61,10 @@ class _LoginBodyState extends State<LoginBody> {
           ),
           LoginTextField(
             validator: (value) {
-              if (value!.contains('@email.com')) {
-                return 'This email is badly formated';
+              if (value!.contains('@gmail.com')) {
+                return null;
               }
-              return null;
+              return 'This email is badly formated';
             },
             nextnode: passwordnode,
             text: 'email',
@@ -112,11 +112,26 @@ class _LoginBodyState extends State<LoginBody> {
             node: usernamenode,
             controller: usernamecontroller,
           ),
-          SizedBox(height: landscapecondition?screendata.screensize.height * 0.05:screendata.screensize.height * 0.02),
-          LoginButton(authtype: authtype),
-          SizedBox(height:landscapecondition?screendata.screensize.height*0.1: screendata.screensize.height * 0.04),
+          SizedBox(
+              height: landscapecondition
+                  ? screendata.screensize.height * 0.05
+                  : screendata.screensize.height * 0.02),
+          LoginButton(
+            authtype: authtype,
+            formkey: formkey,
+            email: emailcontroller.text,
+            password: passwordcontroller.text,
+            username: usernamecontroller.text,
+          ),
+          SizedBox(
+              height: landscapecondition
+                  ? screendata.screensize.height * 0.1
+                  : screendata.screensize.height * 0.04),
           ExternalSigninRow(),
-          SizedBox(height:landscapecondition?screendata.screensize.height*0.08: screendata.screensize.height * 0.04),
+          SizedBox(
+              height: landscapecondition
+                  ? screendata.screensize.height * 0.08
+                  : screendata.screensize.height * 0.04),
           SwitchText(
             authtype: authtype,
             setstate: (newauthtype) {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WholeScreen extends StatelessWidget {
+  static const String routename  = '/';
   const WholeScreen();
   @override
   Widget build(BuildContext context) {

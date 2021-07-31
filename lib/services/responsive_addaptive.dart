@@ -1,3 +1,4 @@
+import 'package:club/models/cupertino_navigator.dart';
 import 'package:club/models/screendata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -8,6 +9,33 @@ class ResponsiveAddaptive {
       return true;
     } else {
       return false;
+    }
+  }
+
+  static void navigate({
+    required BuildContext context,
+    required Widget screen,
+    required String routename,
+  }) {
+    if (ResponsiveAddaptive.screendata(context).screentype == ScreenType.web) {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return screen;
+        },
+      );
+    } else {
+      if (ResponsiveAddaptive.isios()) {
+        Navigator.of(context).push(
+          CupertinoNavigate(
+            builder: (context) {
+              return screen;
+            },
+          ),
+        );
+      } else {
+        Navigator.of(context).pushNamed(routename);
+      }
     }
   }
 
