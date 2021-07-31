@@ -6,13 +6,17 @@ import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'firestore.dart';
 
 class Auth {
   var _auth = FirebaseAuth.instance;
+  GoogleSignIn _googlesignin = GoogleSignIn();
   User? getcurrentuser() {
     return _auth.currentUser;
   }
+
+  // function to login or signin in the app
 
   Future authfunction({
     required AuthType authType,
@@ -57,6 +61,7 @@ class Auth {
       setstate(false);
     }
   }
+  // signin fucntion
 
   Future _signin({
     required String email,
@@ -64,16 +69,17 @@ class Auth {
     required String? username,
   }) async {
     var user = await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+        email: email, password: password);
     await FireStore()
         .adduser(username: username.toString(), userid: user.user!.uid);
   }
+  // login function
 
   Future _login({required String email, required String password}) async {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
   }
+
+  //sign out function
 
   Future signout(BuildContext context) async {
     try {
@@ -103,4 +109,49 @@ class Auth {
     }
   }
 
+  //function to signin with google
+
+  Future googlesigninfunction(
+      BuildContext context, void Function(bool) setstate) async {
+    try {
+      final connection = await Connectivity().checkConnectivity();
+      if (connection != ConnectivityResult.none) {
+        setstate(true);
+        final GoogleSignInAccount? googleSignInAccount =
+            await _googlesignin.signIn();
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount!.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+        final result = await _auth.signInWithCredential(credential);
+        await FireStore().adduser(
+          username: result.user!.displayName.toString(),
+          userid: result.user!.uid,
+        );
+        Navigator.of(context).pushReplacement(
+          ResponsiveAddaptive.isios()
+              ? CupertinoPageRoute(
+                  builder: (context) {
+                    return MyApp();
+                  },
+                )
+              : MaterialPageRoute(
+                  builder: (context) {
+                    return MyApp();
+                  },
+                ),
+        );
+        setstate(false);
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(showsnackbar('There is no internet connection'));
+        setstate(false);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(showsnackbar(e.toString()));
+      setstate(false);
+    }
+  }
 }
