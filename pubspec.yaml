@@ -50,11 +50,11 @@ flutter_native_splash:
   ios: true
   andriod: false
   web: false
-  image: assets/logo.jfif    
+  image: assets/icon.jfif    
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/logo.jfif"
+  image_path: "assets/icon.jfif"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
