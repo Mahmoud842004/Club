@@ -34,7 +34,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO:enable the app for the web
-    //TODO:make google and facebook auth
+    //TODO:add facebook auth
+    //TODO:change app icon
     var user = Auth().getcurrentuser();
     return MultiProvider(
       providers: [

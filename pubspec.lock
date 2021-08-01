@@ -242,6 +242,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_login_facebook:
+    dependency: "direct main"
+    description:
+      name: flutter_login_facebook
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   flutter_native_splash:
     dependency: "direct dev"
     description:
@@ -295,7 +302,7 @@ packages:
     source: hosted
     version: "2.0.1"
   google_sign_in_web:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_sign_in_web
       url: "https://pub.dartlang.org"
@@ -336,6 +343,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3"
+  list_ext:
+    dependency: transitive
+    description:
+      name: list_ext
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   matcher:
     dependency: transitive
     description:

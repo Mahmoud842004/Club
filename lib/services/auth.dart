@@ -8,10 +8,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'firestore.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 
 class Auth {
   var _auth = FirebaseAuth.instance;
   GoogleSignIn _googlesignin = GoogleSignIn();
+  FacebookLogin _facebookLogin = FacebookLogin();
+
   User? getcurrentuser() {
     return _auth.currentUser;
   }
@@ -129,6 +132,7 @@ class Auth {
         await FireStore().adduser(
           username: result.user!.displayName.toString(),
           userid: result.user!.uid,
+          imageurl: result.user!.photoURL,
         );
         Navigator.of(context).pushReplacement(
           ResponsiveAddaptive.isios()
@@ -152,6 +156,57 @@ class Auth {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(showsnackbar(e.toString()));
       setstate(false);
+    }
+  }
+
+  Future facebooksignin(context, void Function(bool) setstate) async {
+    try {
+      final ConnectivityResult result =
+          await Connectivity().checkConnectivity();
+      if (result != ConnectivityResult.none) {
+        setstate(true);
+        FacebookLoginResult res = await _facebookLogin.logIn();
+        switch (res.status) {
+          case FacebookLoginStatus.cancel:
+            break;
+          case FacebookLoginStatus.error:
+            print(res.error);
+            ScaffoldMessenger.of(context)
+                .showSnackBar(showsnackbar('There is an error'));
+            setstate(false);
+            break;
+          case FacebookLoginStatus.success:
+            FacebookAccessToken? token = res.accessToken;
+            AuthCredential credential =
+                FacebookAuthProvider.credential(token!.token);
+            var user = await _auth.signInWithCredential(credential);
+            await FireStore().adduser(
+              username: user.user!.displayName.toString(),
+              userid: user.user!.uid,
+              imageurl: user.user!.photoURL,
+            );
+            setstate(false);
+            Navigator.of(context).pushReplacement(
+              ResponsiveAddaptive.isios()
+                  ? CupertinoPageRoute(
+                      builder: (context) {
+                        return MyApp();
+                      },
+                    )
+                  : MaterialPageRoute(
+                      builder: (context) {
+                        return MyApp();
+                      },
+                    ),
+            );
+            break;
+        }
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(showsnackbar('There is no internet connection'));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(showsnackbar(e.toString()));
     }
   }
 }
