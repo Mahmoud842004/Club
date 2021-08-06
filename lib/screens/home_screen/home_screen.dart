@@ -1,16 +1,27 @@
-import 'package:club/services/auth.dart';
+import 'package:club/models/screendata.dart';
+import 'package:club/services/responsive_addaptive.dart';
+import 'package:club/widgets/app_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
+
+import 'local_widgets/local_widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: InkWell(
-        onTap: ()=>Auth().signout(context),
-              child: Center(
-          child: Text('home screen').tr(),
-        ),
+    bool isweb =
+        ResponsiveAddaptive.screendata(context).screentype == ScreenType.web
+            ? true
+            : false;
+    return DefaultTabController(
+      length: 5,
+      child: AppScaffold(
+        appbar: isweb
+            ? AppBar(
+                title: WebAppBarBody(),
+              )
+            : null,
+        body: isweb ? WebBody() : PhoneBody(),
+        bottomnavigationbar: isweb ? null : PhoneNavigationBar(),
       ),
     );
   }

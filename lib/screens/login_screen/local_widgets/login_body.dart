@@ -24,9 +24,9 @@ class _LoginBodyState extends State<LoginBody> {
   FocusNode emailnode = FocusNode();
   FocusNode passwordnode = FocusNode();
   FocusNode usernamenode = FocusNode();
-  final TextEditingController emailcontroller = TextEditingController();
-  final TextEditingController passwordcontroller = TextEditingController();
-  final TextEditingController usernamecontroller = TextEditingController();
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  TextEditingController usernamecontroller = TextEditingController();
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   @override
@@ -40,11 +40,18 @@ class _LoginBodyState extends State<LoginBody> {
     usernamecontroller.dispose();
   }
 
+  void editusernamewhilelogin() {
+    if (authtype == AuthType.login) {
+      usernamecontroller.text = '******';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var screendata = ResponsiveAddaptive.screendata(context);
     var landscapecondition =
         screendata.screentype == ScreenType.landscape ? true : false;
+    editusernamewhilelogin();
     return Form(
       key: formkey,
       child: ListView(
@@ -60,7 +67,7 @@ class _LoginBodyState extends State<LoginBody> {
           ),
           LoginTextField(
             validator: (value) {
-              if (value!.contains('@gmail.com')) {
+              if (value!.contains('@') && value.endsWith('.com')) {
                 return null;
               }
               return 'This email is badly formated';
@@ -123,15 +130,12 @@ class _LoginBodyState extends State<LoginBody> {
             password: passwordcontroller.text,
             username: usernamecontroller.text,
           ),
-          authtype == AuthType.signin
-              ? SizedBox(
-                  height: landscapecondition
-                      ? screendata.screensize.height * 0.1
-                      : screendata.screensize.height * 0.04)
-              : SizedBox.shrink(),
-          authtype == AuthType.signin
-              ? ExternalSigninRow()
-              : SizedBox.shrink(),
+          SizedBox(
+            height: landscapecondition
+                ? screendata.screensize.height * 0.1
+                : screendata.screensize.height * 0.04,
+          ),
+          ExternalSigninRow(),
           SizedBox(
               height: landscapecondition
                   ? screendata.screensize.height * 0.08
@@ -142,10 +146,14 @@ class _LoginBodyState extends State<LoginBody> {
               setState(
                 () {
                   authtype = newauthtype;
+                  emailcontroller = TextEditingController();
+                  passwordcontroller = TextEditingController();
+                  usernamecontroller = TextEditingController();
                 },
               );
             },
           ),
+          SizedBox(height: screendata.screensize.height*0.1),
         ],
       ),
     );

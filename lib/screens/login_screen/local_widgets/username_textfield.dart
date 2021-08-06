@@ -18,12 +18,16 @@ class UsernameTextField extends StatelessWidget {
     return AnimatedContainer(
       height: authtype == AuthType.login
           ? 0.0
-          : screendata.screentype==ScreenType.landscape?screendata.screensize.height * 0.3:screendata.screensize.height * 0.16,
+          : screendata.screentype == ScreenType.landscape
+              ? screendata.screensize.height * 0.3
+              : screendata.screensize.height * 0.16,
       duration: Duration(milliseconds: 80),
       child: LoginTextField(
         validator: (value) {
-          if (value!.split('').length < 4) {
+          if (value!.split('').length < 3) {
             return 'This username is too short';
+          } else if (value.split('').length > 7) {
+            return 'This username is too long';
           }
           return null;
         },

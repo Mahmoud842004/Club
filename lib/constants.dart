@@ -1,4 +1,7 @@
+import 'package:club/services/responsive_addaptive.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const Map theme = const {
@@ -6,32 +9,46 @@ const Map theme = const {
   'white': const Color.fromRGBO(246, 249, 248, 1),
   'grey': const Color.fromRGBO(240, 240, 240, 1),
   'violet': const Color.fromRGBO(124, 55, 167, 1),
-  'pink': const Color.fromRGBO(250, 233, 229, 1)
+  'pink': const Color.fromRGBO(248, 237, 236, 1)
 };
 
 Map textstyles = {
-  'login title': GoogleFonts.merriweather(
+  'large': GoogleFonts.merriweather(
+    textStyle: TextStyle(
+      fontSize: 35,
+      fontWeight: FontWeight.bold,
+      color: theme['black'],
+    ),
+  ),
+  'very large': GoogleFonts.merriweather(
     textStyle: TextStyle(
       fontSize: 40,
       fontWeight: FontWeight.bold,
       color: theme['black'],
     ),
   ),
-  'login screen style': GoogleFonts.merriweather(
+  'small grey': GoogleFonts.merriweather(
     textStyle: TextStyle(
       fontSize: 15,
       color: Colors.grey,
     ),
   ),
-  'login button style': GoogleFonts.merriweather(
+  'small': GoogleFonts.merriweather(
+    textStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 20,
+      color: theme['black'],
+    ),
+  ),
+  'small white': GoogleFonts.merriweather(
     textStyle: TextStyle(
       fontSize: 15,
       color: theme['white'],
     ),
   ),
-  'snack bar style': GoogleFonts.merriweather(
+  'very small': GoogleFonts.merriweather(
     textStyle: TextStyle(
-      fontSize: 10,
+      fontSize: 12,
       color: theme['black'],
     ),
   ),
@@ -52,3 +69,15 @@ InputDecoration decoration = InputDecoration(
     ),
   ),
 );
+
+List tabslist = [
+  Icon(ResponsiveAddaptive.isios() ? CupertinoIcons.home : Icons.home),
+  Icon(ResponsiveAddaptive.isios() ? CupertinoIcons.search : Icons.search),
+  Icon(ResponsiveAddaptive.isios()
+      ? CupertinoIcons.plus_app_fill
+      : Icons.add_box),
+  Icon(ResponsiveAddaptive.isios()
+      ? CupertinoIcons.chat_bubble_text_fill
+      : Icons.message),
+  Icon(ResponsiveAddaptive.isios() ? CupertinoIcons.person_fill : Icons.person),
+];

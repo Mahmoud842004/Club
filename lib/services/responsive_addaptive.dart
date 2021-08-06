@@ -2,6 +2,8 @@ import 'package:club/models/cupertino_navigator.dart';
 import 'package:club/models/screendata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:translator/translator.dart';
 
 class ResponsiveAddaptive {
   static bool isios() {
@@ -12,7 +14,7 @@ class ResponsiveAddaptive {
     }
   }
 
-  static void navigate({
+  static void pushnavigate({
     required BuildContext context,
     required Widget screen,
     required String routename,
@@ -55,5 +57,22 @@ class ResponsiveAddaptive {
     } else {
       return ScreenData(screensize: size, screentype: ScreenType.phone);
     }
+  }
+
+  static bool isweb() {
+    if (defaultTargetPlatform == TargetPlatform.iOS ||
+        defaultTargetPlatform == TargetPlatform.android) {
+      return false;
+    }
+    return true;
+  }
+
+  static Future<String> translate(BuildContext context, String text) async {
+    if (context.locale == Locale('ar')) {
+      var translator =
+          await GoogleTranslator().translate(text, from: 'en', to: 'ar');
+      return translator.text;
+    }
+    return text;
   }
 }

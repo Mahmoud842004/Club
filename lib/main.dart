@@ -1,4 +1,5 @@
 import 'package:auto_direction/auto_direction.dart';
+import 'package:club/constants.dart';
 import 'package:club/models/material_pagetheme.dart';
 import 'package:club/screens/whole_screen.dart';
 import 'package:club/services/auth.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO:enable the app for the web
-    var user = Auth().getcurrentuser();
+    User? user = Auth().getcurrentuser();
     return MultiProvider(
       providers: [
         Provider<User?>.value(value: user),
@@ -67,6 +68,15 @@ class MyApp extends StatelessWidget {
                     ),
                     routes: {
                       WholeScreen.routename: (context) => WholeScreen(),
+                      '/another': (context) => Scaffold(
+                            backgroundColor: Colors.white,
+                            body: Center(
+                              child: Text(
+                                'web app',
+                                style: TextStyle(color: theme['black']),
+                              ),
+                            ),
+                          ),
                     },
                   ),
           );

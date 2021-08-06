@@ -12,14 +12,14 @@ class LoginButton extends StatefulWidget {
   final GlobalKey<FormState> formkey;
   final String email;
   final String password;
-  final String? username;
+  final String username;
 
   const LoginButton({
     required this.authtype,
     required this.email,
     required this.password,
     required this.formkey,
-    this.username,
+    required this.username,
   });
 
   @override

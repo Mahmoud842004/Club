@@ -2,7 +2,7 @@ import 'package:club/main.dart';
 import 'package:club/models/auth_type.dart';
 import 'package:club/services/responsive_addaptive.dart';
 import 'package:club/widgets/app_snackbar.dart';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,12 +55,16 @@ class Auth {
           );
           setstate(false);
         } else {
+          String connectionerrortext = await ResponsiveAddaptive.translate(
+              context, 'There is no internet connection');
           ScaffoldMessenger.of(context)
-              .showSnackBar(showsnackbar('There is no internet connection'));
+              .showSnackBar(showsnackbar(connectionerrortext));
         }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(showsnackbar(e.toString()));
+      String errortext =
+          await ResponsiveAddaptive.translate(context, e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(showsnackbar(errortext));
       setstate(false);
     }
   }
@@ -104,11 +108,15 @@ class Auth {
                   ),
             (route) => false);
       } else {
+        String connectionerrortext = await ResponsiveAddaptive.translate(
+            context, 'There is no internet connection');
         ScaffoldMessenger.of(context)
-            .showSnackBar(showsnackbar('There is no internet connection'));
+            .showSnackBar(showsnackbar(connectionerrortext));
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(showsnackbar(e.toString()));
+      String errortext =
+          await ResponsiveAddaptive.translate(context, e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(showsnackbar(errortext));
     }
   }
 
@@ -129,11 +137,14 @@ class Auth {
           idToken: googleSignInAuthentication.idToken,
         );
         final result = await _auth.signInWithCredential(credential);
-        await FireStore().adduser(
-          username: result.user!.displayName.toString(),
-          userid: result.user!.uid,
-          imageurl: result.user!.photoURL,
-        );
+        if (result.additionalUserInfo!.isNewUser) {
+          await FireStore().adduser(
+            username: result.user!.displayName.toString(),
+            userid: result.user!.uid,
+            imageurl: result.user!.photoURL,
+          );
+        }
+
         Navigator.of(context).pushReplacement(
           ResponsiveAddaptive.isios()
               ? CupertinoPageRoute(
@@ -149,12 +160,16 @@ class Auth {
         );
         setstate(false);
       } else {
+        String connectionerrortext = await ResponsiveAddaptive.translate(
+            context, 'There is no internet connection');
         ScaffoldMessenger.of(context)
-            .showSnackBar(showsnackbar('There is no internet connection'));
+            .showSnackBar(showsnackbar(connectionerrortext));
         setstate(false);
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(showsnackbar(e.toString()));
+      String errortext =
+          await ResponsiveAddaptive.translate(context, e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(showsnackbar(errortext));
       setstate(false);
     }
   }
@@ -180,11 +195,13 @@ class Auth {
             AuthCredential credential =
                 FacebookAuthProvider.credential(token!.token);
             var user = await _auth.signInWithCredential(credential);
-            await FireStore().adduser(
-              username: user.user!.displayName.toString(),
-              userid: user.user!.uid,
-              imageurl: user.user!.photoURL,
-            );
+            if (user.additionalUserInfo!.isNewUser) {
+              await FireStore().adduser(
+                username: user.user!.displayName.toString(),
+                userid: user.user!.uid,
+                imageurl: user.user!.photoURL,
+              );
+            }
             setstate(false);
             Navigator.of(context).pushReplacement(
               ResponsiveAddaptive.isios()
@@ -202,11 +219,15 @@ class Auth {
             break;
         }
       } else {
+        String connectionerrortext = await ResponsiveAddaptive.translate(
+            context, 'There is no internet connection');
         ScaffoldMessenger.of(context)
-            .showSnackBar(showsnackbar('There is no internet connection'));
+            .showSnackBar(showsnackbar(connectionerrortext));
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(showsnackbar(e.toString()));
+      String errortext =
+          await ResponsiveAddaptive.translate(context, e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(showsnackbar(errortext));
     }
   }
 }
