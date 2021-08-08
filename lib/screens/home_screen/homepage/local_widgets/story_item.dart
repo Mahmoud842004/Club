@@ -1,21 +1,27 @@
 import 'dart:async';
-import 'package:club/constants.dart';
 import 'package:club/models/screendata.dart';
 import 'package:club/models/users.dart';
 import 'package:club/screens/home_screen/homepage/local_widgets/animated_story.dart';
+import 'package:club/screens/home_screen/homepage/local_widgets/story_avatar.dart';
 import 'package:club/services/firestore.dart';
-import 'package:club/services/responsive_addaptive.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class StoryItem extends StatefulWidget {
-  StoryItem(
-      {required this.userid,
-      required this.addtolist,
-      required this.screendata});
+  StoryItem({
+    required this.userid,
+    required this.addtolist,
+    required this.screendata,
+    required this.index,
+    required this.usersunseenedstories,
+  });
   final String userid;
-  final Function(Users user) addtolist;
+  final Function(Map<String, dynamic>) addtolist;
   final ScreenData screendata;
+  final int index;
+  final List usersunseenedstories;
 
   @override
   _StoryItemState createState() => _StoryItemState();
@@ -28,7 +34,7 @@ class _StoryItemState extends State<StoryItem> {
   @override
   void initState() {
     streamSubscription =
-        FireStore(userid: widget.userid).userstream.listen((event) {
+        FireStore(id: widget.userid).userstream.listen((event) {
       // ignore: unnecessary_null_comparison
       if (event != null) {
         if (done == false) {
@@ -36,9 +42,6 @@ class _StoryItemState extends State<StoryItem> {
             user = event;
             done = true;
           });
-          if (user!.stories.isEmpty == false) {
-            widget.addtolist(user!);
-          }
         }
       }
     });
@@ -59,37 +62,14 @@ class _StoryItemState extends State<StoryItem> {
     } else if (user!.stories.isEmpty) {
       return SizedBox.shrink();
     } else {
-      bool hasprofileimage = user!.profileimage != null ? true : false;
-      return Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.pink,
-                  width: 3,
-                )),
-            child: CircleAvatar(
-              radius: 30,
-              backgroundColor: hasprofileimage ? null : Colors.grey[400],
-              backgroundImage: hasprofileimage
-                  ? NetworkImage(
-                      user!.profileimage.toString(),
-                    )
-                  : null,
-              child: hasprofileimage
-                  ? null
-                  : Icon(
-                      ResponsiveAddaptive.isios()
-                          ? CupertinoIcons.person
-                          : Icons.person,
-                      color: theme['black'],
-                    ),
-            ),
-          ),
-          SizedBox(height: widget.screendata.screensize.height * 0.01),
-          Text(user!.name, style: textstyles['very small'])
-        ],
+      User? authprovider = Provider.of<User?>(context);
+      return StoryAvatar(
+        user: user,
+        index: widget.index,
+        addtolist: widget.addtolist,
+        screendata: widget.screendata,
+        authprovider: authprovider,
+        usersunseenedstories:widget.usersunseenedstories,
       );
     }
   }

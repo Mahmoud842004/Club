@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const Map theme = const {
+const Map<String,Color> theme = const {
   'black': const Color.fromRGBO(50, 50, 50, 1),
   'white': const Color.fromRGBO(246, 249, 248, 1),
   'grey': const Color.fromRGBO(240, 240, 240, 1),
   'violet': const Color.fromRGBO(124, 55, 167, 1),
-  'pink': const Color.fromRGBO(248, 237, 236, 1)
+  'pink': const Color.fromRGBO(255, 192, 203,1.0),
 };
 
 Map textstyles = {

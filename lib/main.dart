@@ -1,8 +1,10 @@
 import 'package:auto_direction/auto_direction.dart';
 import 'package:club/constants.dart';
 import 'package:club/models/material_pagetheme.dart';
+import 'package:club/models/users.dart';
 import 'package:club/screens/whole_screen.dart';
 import 'package:club/services/auth.dart';
+import 'package:club/services/firestore.dart';
 import 'package:club/services/responsive_addaptive.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,6 +41,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<User?>.value(value: user),
+        StreamProvider<Users?>.value(
+          value: user == null
+              ? Stream.empty()
+              : FireStore(id: user.uid).userstream,
+          initialData: null,
+        ),
       ],
       child: Builder(
         builder: (context) {

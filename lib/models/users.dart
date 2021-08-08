@@ -15,7 +15,7 @@ class Users {
       posts: map['posts'],
       backgroundimage: map['background image'],
       profileimage: map['profile image'],
-      isonline: map['is online'],
+      isonline: map['online'],
       savedposts: map['saved posts'],
       stories: map['stories'],
     );

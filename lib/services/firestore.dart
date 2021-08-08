@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:club/models/story.dart';
 import 'package:club/models/users.dart';
 
 class FireStore {
@@ -6,9 +7,12 @@ class FireStore {
   final CollectionReference<Map<String, dynamic>> _users =
       FirebaseFirestore.instance.collection('users');
 
-  final String? userid;
+  final CollectionReference<Map<String, dynamic>> _stories =
+      FirebaseFirestore.instance.collection('stories');
 
-  FireStore({this.userid});
+  final String? id;
+
+  FireStore({this.id});
 
   Future adduser(
       {required String username,
@@ -25,22 +29,36 @@ class FireStore {
     });
   }
 
-  Stream<List<String>> get folowersstream {
-    return _users.doc(userid).collection('followers').snapshots().map(
+  Stream get storywatchestream {
+    return _stories
+        .doc(id)
+        .collection('watches')
+        .snapshots()
+        .map((snapshot) => convertquerytolist(snapshot));
+  }
+
+  Stream<List<String>> get followingstream {
+    return _users.doc(id).collection('following').snapshots().map(
           (snapshot) => convertquerytolist(snapshot),
         );
   }
 
+  Stream<Story> get storystream {
+    return _stories.doc(id).snapshots().map(
+          (event) => Story.fromMap(event.data(), event.id),
+        );
+  }
+
   List<String> convertquerytolist(QuerySnapshot snapshot) {
-    List<String> usersidslist = [];
+    List<String> list = [];
     for (var snapshotuser in snapshot.docs) {
-      usersidslist.add(snapshotuser.id);
+      list.add(snapshotuser.id);
     }
-    return usersidslist;
+    return list;
   }
 
   Stream<Users> get userstream {
-    return _users.doc(userid).snapshots().map((event) {
+    return _users.doc(id).snapshots().map((event) {
       return Users.fromMap(map: event.data(), id: event.id);
     });
   }

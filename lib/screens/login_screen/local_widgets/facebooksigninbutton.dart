@@ -17,7 +17,7 @@ class _FacebookSigninButtonState extends State<FacebookSigninButton> {
       backgroundColor: Colors.blue,
       mini: true,
       icon: isloading ? FontAwesomeIcons.spinner : FontAwesomeIcons.facebook,
-      iconColor: theme['white'],
+      iconColor: theme['white']!,
       onPressed: () => Auth().facebooksignin(context, (loading) {
         setState(
           () {

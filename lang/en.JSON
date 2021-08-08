@@ -8,5 +8,6 @@
     "username": "Username",
     "username hint text": "Enter your username",
     "login switch text": "I already have an account",
-    "sign in switch text": "Create an account"
+    "sign in switch text": "Create an account",
+    "stories":"Stories"
 }

@@ -1,3 +1,5 @@
+import 'package:club/models/screendata.dart';
+import 'package:club/services/responsive_addaptive.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedStory extends StatefulWidget {
@@ -40,11 +42,18 @@ class _AnimatedStoryState extends State<AnimatedStory>
 
   @override
   Widget build(BuildContext context) {
-    return Opacity(
-      opacity: controller!.value,
-      child: CircleAvatar(
-        radius:35,
-        backgroundColor: Colors.grey[350],
+    ScreenData screendata = ResponsiveAddaptive.screendata(context);
+    return Padding(
+      padding: EdgeInsets.only(
+        right: screendata.screensize.width * 0.05,
+        bottom: screendata.screensize.height * 0.05,
+      ),
+      child: Opacity(
+        opacity: controller!.value,
+        child: CircleAvatar(
+          radius: 33,
+          backgroundColor: Colors.grey[350],
+        ),
       ),
     );
   }

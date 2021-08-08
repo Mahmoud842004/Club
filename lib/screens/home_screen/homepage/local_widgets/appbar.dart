@@ -3,13 +3,13 @@ import 'package:club/services/responsive_addaptive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../../../../../constants.dart';
 
 class HomePageAppBar extends StatelessWidget {
+  final ScreenData screendata;
+  HomePageAppBar({required this.screendata});
   @override
   Widget build(BuildContext context) {
-    ScreenData screendata = ResponsiveAddaptive.screendata(context);
     bool landscapecheck =
         screendata.screentype == ScreenType.landscape ? true : false;
     return Container(
@@ -24,8 +24,8 @@ class HomePageAppBar extends StatelessWidget {
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
           colors: [
-            theme['pink'],
-            theme['white'],
+            theme['pink']!,
+            theme['white']!,
           ],
         ),
       ),

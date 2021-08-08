@@ -18,9 +18,9 @@ class _GoogleSigninButtonState extends State<GoogleSigninButton> {
     final bool isweb = ResponsiveAddaptive.isweb();
     return SignInButtonBuilder(
       icon: isloading ? FontAwesomeIcons.spinner : FontAwesomeIcons.google,
-      iconColor: theme['white'],
+      iconColor: theme['white']!,
       mini: isweb?false:true,
-      backgroundColor: theme['black'],
+      backgroundColor: theme['black']!,
       onPressed: () => Auth().googlesigninfunction(context, (loading) {
         setState(() {
           isloading = loading;

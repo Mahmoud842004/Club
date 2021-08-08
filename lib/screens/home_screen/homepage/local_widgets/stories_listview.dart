@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:club/constants.dart';
 import 'package:club/models/screendata.dart';
-import 'package:club/models/users.dart';
 import 'package:club/screens/home_screen/homepage/local_widgets/animated_story.dart';
+import 'package:club/screens/home_screen/homepage/local_widgets/current_user_story.dart';
 import 'package:club/widgets/app_snackbar.dart';
 import 'story_item.dart';
 import 'package:club/services/firestore.dart';
@@ -20,12 +20,12 @@ class StoryListView extends StatefulWidget {
 class _StoryListViewState extends State<StoryListView> {
   List? usersidslist;
   late StreamSubscription streamSubscription;
-  List usersstorieslsit = [];
+  List<Map<String, dynamic>> usersunseenedstories = [];
   bool done = false;
   @override
   void initState() {
     streamSubscription =
-        FireStore(userid: widget.userprovider!.uid).folowersstream.listen(
+        FireStore(id: widget.userprovider!.uid).followingstream.listen(
       (event) {
         // ignore: unnecessary_null_comparison
         if (event != null) {
@@ -48,6 +48,29 @@ class _StoryListViewState extends State<StoryListView> {
     super.initState();
   }
 
+  List<Widget> returnstoryitemslist() {
+    List<Widget> widgetslist = [];
+
+    for (var item in usersidslist!) {
+      widgetslist.add(
+        StoryItem(
+          index: usersidslist!.indexOf(item),
+          usersunseenedstories: usersunseenedstories,
+          userid: item,
+          addtolist: (Map<String, dynamic> storymap) {
+            setState(
+              () {
+                usersunseenedstories.add(storymap);
+              },
+            );
+          },
+          screendata: widget.screendata,
+        ),
+      );
+    }
+    return widgetslist;
+  }
+
   @override
   void dispose() {
     streamSubscription.cancel();
@@ -56,7 +79,6 @@ class _StoryListViewState extends State<StoryListView> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO:add the current user story
     bool landscapecheck =
         widget.screendata.screentype == ScreenType.landscape ? true : false;
     if (usersidslist == null) {
@@ -65,17 +87,12 @@ class _StoryListViewState extends State<StoryListView> {
             vertical: widget.screendata.screensize.height * 0.03),
         width: widget.screendata.screensize.width,
         height: widget.screendata.screensize.height * 0.15,
-        child: ListView.separated(
+        child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return AnimatedStory();
           },
           itemCount: 10,
-          separatorBuilder: (context, index) {
-            return SizedBox(
-              width: widget.screendata.screensize.width * 0.05,
-            );
-          },
         ),
       );
     } else if (usersidslist!.isEmpty) {
@@ -96,29 +113,15 @@ class _StoryListViewState extends State<StoryListView> {
         height: landscapecheck
             ? widget.screendata.screensize.height * 0.3
             : widget.screendata.screensize.height * 0.2,
-        child: ListView.builder(
+        child: ListView(
           scrollDirection: Axis.horizontal,
-          itemCount: usersidslist!.length,
-          itemBuilder: (context, index) {
-            return Builder(
-              builder: (context) {
-                return StoryItem(
-                  userid: usersidslist![index],
-                  addtolist: (Users user) {
-                    setState(
-                      () {
-                        usersstorieslsit.add(user);
-                      },
-                    );
-                    for (var item in usersstorieslsit) {
-                      print(item.name);
-                    }
-                  },
-                  screendata: widget.screendata,
-                );
-              },
-            );
-          },
+          children: [
+            CurrentUserStory(
+              screendata: widget.screendata,
+              userid: widget.userprovider!.uid,
+            ),
+            ...returnstoryitemslist()
+          ],
         ),
       );
     }
