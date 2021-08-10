@@ -2,13 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Story {
   final String id;
-  final String imageurl;
-  final String videourl;
+  final String? imageurl;
+  final String? videourl;
   final Timestamp time;
   final String content;
   final bool watched;
+  List? watches;
 
-  factory Story.fromMap(Map<String, dynamic>? map, String id) {
+  factory Story.fromMap(
+      {Map<String, dynamic>? map, required String id, List? watches}) {
     return Story(
       id: id,
       imageurl: map!['imageurl'],
@@ -16,6 +18,7 @@ class Story {
       time: map['time'],
       content: map['content'],
       watched: map['watched'],
+      watches: watches,
     );
   }
 
@@ -26,5 +29,6 @@ class Story {
     required this.time,
     required this.content,
     required this.watched,
+    this.watches,
   });
 }

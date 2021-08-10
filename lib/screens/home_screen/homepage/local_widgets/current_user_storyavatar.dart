@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:club/screens/story_pageview_screen/story_page.dart';
+import 'package:club/services/responsive_addaptive.dart';
 import 'story_widget.dart';
 import 'package:club/models/screendata.dart';
 import 'package:club/models/story.dart';
@@ -22,19 +24,17 @@ class _CurrentUserStoryAvatarState extends State<CurrentUserStoryAvatar> {
   Story? story;
   @override
   void initState() {
-    if (widget.user.stories.isEmpty == false) {
-      streamSubscription =
-          FireStore(id: widget.user.stories.last).storystream.listen((event) {
-        // ignore: unnecessary_null_comparison
-        if (event != null) {
-          if (mounted) {
-            setState(() {
-              story = event;
-            });
-          }
+    streamSubscription =
+        FireStore(id: widget.user.stories.last).storystream.listen((event) {
+      // ignore: unnecessary_null_comparison
+      if (event != null) {
+        if (mounted) {
+          setState(() {
+            story = event;
+          });
         }
-      });
-    }
+      }
+    });
     super.initState();
   }
 
@@ -52,8 +52,13 @@ class _CurrentUserStoryAvatarState extends State<CurrentUserStoryAvatar> {
       return StoryWidget.currentuser(
         user: widget.user,
         screendata: widget.screendata,
-        story: story,
-        iscurrentuser: true,
+        ontap: (){
+                    ResponsiveAddaptive.pushnavigate(
+            context: context,
+            screen: StoryPage.currentuser(user: widget.user)
+          );
+        },
+        laststory: story,
       );
     }
   }

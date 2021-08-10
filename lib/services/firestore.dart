@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:club/models/story.dart';
 import 'package:club/models/users.dart';
+import 'package:club/services/responsive_addaptive.dart';
+import 'package:club/widgets/app_snackbar.dart';
+import 'package:flutter/material.dart';
 
 class FireStore {
   // users collection
@@ -45,14 +48,14 @@ class FireStore {
 
   Stream<Story> get storystream {
     return _stories.doc(id).snapshots().map(
-          (event) => Story.fromMap(event.data(), event.id),
+          (event) => Story.fromMap(map: event.data(), id: event.id),
         );
   }
 
   List<String> convertquerytolist(QuerySnapshot snapshot) {
     List<String> list = [];
     for (var snapshotuser in snapshot.docs) {
-      list.add(snapshotuser.id);
+      list.add(snapshotuser.id.trim());
     }
     return list;
   }
@@ -61,5 +64,43 @@ class FireStore {
     return _users.doc(id).snapshots().map((event) {
       return Users.fromMap(map: event.data(), id: event.id);
     });
+  }
+
+  Future getstorieslist(List storiesids) async {
+    try {
+      List<Story> storieslist = [];
+      for (var storyid in storiesids) {
+        var watches = await _stories.doc(storyid).collection('watches').get();
+        var watcheslist = convertquerytolist(watches);
+        var story = await _stories.doc(storyid).get();
+        storieslist.add(
+          Story.fromMap(id: story.id, map: story.data(), watches: watcheslist),
+        );
+      }
+      return storieslist;
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
+    }
+  }
+
+  Future markstoryaswatched(
+      String storyid, String currentuserid, BuildContext context,bool currentuser) async {
+    try {
+       if (currentuser) {
+        await _stories.doc(storyid).update({
+          'watched':true,
+        });
+       }else{
+               await _stories
+          .doc(storyid)
+          .collection('watches')
+          .doc(currentuserid)
+          .set({});
+       }
+    } catch (e) {
+      String error = await ResponsiveAddaptive.translate(context, e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(showsnackbar(error));
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:club/models/cupertino_navigator.dart';
+import 'package:club/models/material_navigator.dart';
 import 'package:club/models/screendata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -17,7 +18,6 @@ class ResponsiveAddaptive {
   static void pushnavigate({
     required BuildContext context,
     required Widget screen,
-    required String routename,
   }) {
     if (ResponsiveAddaptive.screendata(context).screentype == ScreenType.web) {
       showModalBottomSheet(
@@ -36,7 +36,13 @@ class ResponsiveAddaptive {
           ),
         );
       } else {
-        Navigator.of(context).pushNamed(routename);
+        Navigator.of(context).push(
+          MaterialNavigator(
+            builder: (context) {
+              return screen;
+            },
+          ),
+        );
       }
     }
   }

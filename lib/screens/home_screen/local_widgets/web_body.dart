@@ -14,6 +14,10 @@ class WebBody extends StatelessWidget {
           child: Container(),
           flex: 3,
         ),
+        Expanded(
+          child: Container(),
+          flex: 2,
+        )
       ],
     );
   }

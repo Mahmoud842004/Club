@@ -21,7 +21,7 @@ class StoryItem extends StatefulWidget {
   final Function(Map<String, dynamic>) addtolist;
   final ScreenData screendata;
   final int index;
-  final List usersunseenedstories;
+  final List<Map<String,dynamic>> usersunseenedstories;
 
   @override
   _StoryItemState createState() => _StoryItemState();

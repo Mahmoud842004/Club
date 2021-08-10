@@ -49,6 +49,9 @@
 			<string>en</string>
 			<string>ar</string>
 		</array>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<key>NSCameraUsageDescription</key>
+		<key>NSMicrophoneUsageDescription</key> 
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleExecutable</key>

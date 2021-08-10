@@ -1,4 +1,5 @@
 import 'package:club/models/screendata.dart';
+import 'package:club/services/auth.dart';
 import 'package:club/services/responsive_addaptive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class HomePageAppBar extends StatelessWidget {
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
           colors: [
-            theme['pink']!,
+            theme['pink']!.withOpacity(0.1),
             theme['white']!,
           ],
         ),
@@ -36,10 +37,13 @@ class HomePageAppBar extends StatelessWidget {
             'Club',
             style: textstyles['large'],
           ),
-          Icon(
-            ResponsiveAddaptive.isios()
-                ? CupertinoIcons.paperplane_fill
-                : FontAwesomeIcons.paperPlane,
+          IconButton(
+            onPressed: () => Auth().signout(context),
+            icon: Icon(
+              ResponsiveAddaptive.isios()
+                  ? CupertinoIcons.paperplane_fill
+                  : FontAwesomeIcons.paperPlane,
+            ),
           )
         ],
       ),

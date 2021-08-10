@@ -6,9 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'local_widgets/local_widgets.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     ScreenData screenData = ResponsiveAddaptive.screendata(context);
     User? provider = Provider.of<User?>(context);
     return AppScaffold(
@@ -22,10 +31,7 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   StoryText(),
-                  StoryListView(
-                    userprovider: provider,
-                    screendata: screenData,
-                  ),
+                  StoryListView(userprovider: provider, screendata: screenData),
                 ],
               ),
             ),

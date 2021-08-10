@@ -1,6 +1,4 @@
 import 'package:auto_direction/auto_direction.dart';
-import 'package:club/constants.dart';
-import 'package:club/models/material_pagetheme.dart';
 import 'package:club/models/users.dart';
 import 'package:club/screens/whole_screen.dart';
 import 'package:club/services/auth.dart';
@@ -66,26 +64,7 @@ class MyApp extends StatelessWidget {
                     supportedLocales: context.supportedLocales,
                     locale: context.locale,
                     localizationsDelegates: context.localizationDelegates,
-                    initialRoute: '/',
-                    theme: Theme.of(context).copyWith(
-                      pageTransitionsTheme: PageTransitionsTheme(
-                        builders: {
-                          TargetPlatform.android: AndriodPageTransition(),
-                        },
-                      ),
-                    ),
-                    routes: {
-                      WholeScreen.routename: (context) => WholeScreen(),
-                      '/another': (context) => Scaffold(
-                            backgroundColor: Colors.white,
-                            body: Center(
-                              child: Text(
-                                'web app',
-                                style: TextStyle(color: theme['black']),
-                              ),
-                            ),
-                          ),
-                    },
+                    home:WholeScreen(),
                   ),
           );
         },

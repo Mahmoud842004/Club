@@ -6,7 +6,7 @@ class PhoneNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TabBar(
-      indicatorWeight: 4,
+      indicatorWeight: 2,
       indicatorColor: theme['black'],
       labelColor: theme['black'],
       unselectedLabelColor: Colors.grey,

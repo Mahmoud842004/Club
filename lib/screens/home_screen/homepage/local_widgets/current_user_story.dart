@@ -15,6 +15,10 @@ class CurrentUserStory extends StatelessWidget {
     Users? user = Provider.of<Users?>(context);
     if (user == null) {
       return AnimatedStory();
+    } else if (user.stories.isEmpty) {
+      return StoryWidget.currentuser(user: user, screendata: screendata, laststory: null,ontap: (){
+        
+      },);
     } else {
       return CurrentUserStoryAvatar(user: user, screendata: screendata);
     }

@@ -1,11 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ChatRoom {
   final String id;
   final String lastmessageid;
-  final List users;
+  final Timestamp time;
 
   ChatRoom({
     required this.id,
     required this.lastmessageid,
-    required this.users,
+    required this.time
   });
 }
