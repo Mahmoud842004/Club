@@ -36,6 +36,12 @@ class _StoryPageViewScreenState extends State<StoryPageViewScreen> {
   }
 
   @override
+  void dispose() {
+    pagecontroller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     User? user = Provider.of<User?>(context);
     return PageView.builder(

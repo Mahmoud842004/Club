@@ -28,7 +28,7 @@ class Auth {
     required GlobalKey<FormState> formkey,
     required BuildContext context,
     required void Function(bool) setstate,
-    String? username,
+    required String? username,
   }) async {
     try {
       if (formkey.currentState!.validate()) {

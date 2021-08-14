@@ -1,15 +1,20 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:club/models/story.dart';
 import 'package:club/models/users.dart';
 import 'package:club/services/responsive_addaptive.dart';
+import 'package:club/services/storage.dart';
 import 'package:club/widgets/app_snackbar.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart';
 
 class FireStore {
   // users collection
   final CollectionReference<Map<String, dynamic>> _users =
       FirebaseFirestore.instance.collection('users');
-
+  // stories collection
   final CollectionReference<Map<String, dynamic>> _stories =
       FirebaseFirestore.instance.collection('stories');
 
@@ -84,23 +89,66 @@ class FireStore {
     }
   }
 
-  Future markstoryaswatched(
-      String storyid, String currentuserid, BuildContext context,bool currentuser) async {
+  Future markstoryaswatched(String storyid, String currentuserid,
+      BuildContext context, bool currentuser) async {
     try {
-       if (currentuser) {
+      if (currentuser) {
         await _stories.doc(storyid).update({
-          'watched':true,
+          'watched': true,
         });
-       }else{
-               await _stories
-          .doc(storyid)
-          .collection('watches')
-          .doc(currentuserid)
-          .set({});
-       }
+      } else {
+        await _stories
+            .doc(storyid)
+            .collection('watches')
+            .doc(currentuserid)
+            .set({});
+      }
     } catch (e) {
       String error = await ResponsiveAddaptive.translate(context, e.toString());
       ScaffoldMessenger.of(context).showSnackBar(showsnackbar(error));
+    }
+  }
+
+  Future addstory({
+    required Users user,
+    required File file,
+    required String filetype,
+    required String content,
+    required Function(bool) setstate,
+    required BuildContext context,
+    required int? videotime,
+  }) async {
+    try {
+      var connection = await Connectivity().checkConnectivity();
+      if (connection != ConnectivityResult.none) {
+        setstate(true);
+        String storyid = randomString(20);
+        String url = await Storage().addandgetstoryfile(file, storyid);
+        await _stories.doc(storyid).set({
+          'content': content,
+          'imageurl': filetype == 'photo' ? url : null,
+          'videourl': filetype == 'video' ? url : null,
+          'watched': false,
+          'time': Timestamp.now(),
+          'video time': videotime,
+        });
+        List newstorieslist = user.stories;
+        newstorieslist.add(storyid);
+        await _users.doc(user.id).update({
+          'stories': newstorieslist,
+        });
+        setstate(false);
+        Navigator.pop(context);
+      } else {
+        var translate = await ResponsiveAddaptive.translate(
+            context, 'There is no internet connection');
+        ScaffoldMessenger.of(context).showSnackBar(showsnackbar(translate));
+      }
+    } catch (e) {
+      setstate(false);
+      var translate =
+          await ResponsiveAddaptive.translate(context, e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(showsnackbar(translate));
     }
   }
 }

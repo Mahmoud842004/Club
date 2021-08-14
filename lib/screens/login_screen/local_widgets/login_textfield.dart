@@ -1,7 +1,7 @@
 import 'package:club/constants.dart';
 import 'package:club/models/auth_type.dart';
 import 'package:club/services/responsive_addaptive.dart';
-import 'package:club/widgets/app_textfield.dart';
+import 'package:club/widgets/app_textformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 

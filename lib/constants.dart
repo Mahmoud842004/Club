@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const Map<String,Color> theme = const {
+const Map<String, Color> theme = const {
   'black': const Color.fromRGBO(50, 50, 50, 1),
   'white': const Color.fromRGBO(246, 249, 248, 1),
   'grey': const Color.fromRGBO(240, 240, 240, 1),
-  'pink': const Color.fromRGBO(255, 192, 203,1.0),
+  'pink': const Color.fromRGBO(255, 192, 203, 1.0),
 };
 
 Map textstyles = {
@@ -45,6 +45,12 @@ Map textstyles = {
       color: theme['white'],
     ),
   ),
+  'small black': GoogleFonts.merriweather(
+    textStyle: TextStyle(
+      fontSize: 15,
+      color: theme['black'],
+    ),
+  ),
   'very small': GoogleFonts.merriweather(
     textStyle: TextStyle(
       fontSize: 12,
@@ -53,7 +59,7 @@ Map textstyles = {
   ),
 };
 
-InputDecoration decoration = InputDecoration(
+InputDecoration formfielddecoration = InputDecoration(
   focusColor: Colors.grey[400],
   fillColor: Colors.grey[400],
   hoverColor: Colors.grey[400],
@@ -65,6 +71,19 @@ InputDecoration decoration = InputDecoration(
   enabledBorder: UnderlineInputBorder(
     borderSide: BorderSide(
       color: Color.fromRGBO(211, 211, 211, 1),
+    ),
+  ),
+);
+InputDecoration fielddecoration = InputDecoration(
+  hintStyle: textstyles['small black'],
+  focusedBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: Color.fromRGBO(50, 50, 50, 1),
+    ),
+  ),
+  enabledBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: Color.fromRGBO(50, 50, 50, 1),
     ),
   ),
 );

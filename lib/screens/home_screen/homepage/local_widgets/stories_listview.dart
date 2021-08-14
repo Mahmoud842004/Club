@@ -97,13 +97,20 @@ class _StoryListViewState extends State<StoryListView> {
       );
     } else if (usersidslist!.isEmpty) {
       //TODO:develop emty user list widget
-      return Row(
-        children: [
-          Text(
-            'There is no Stories',
-            style: textstyles['small'],
-          ),
-        ],
+      return Container(
+        padding: EdgeInsets.symmetric(
+            vertical: widget.screendata.screensize.height * 0.03),
+        child: Row(
+          children: [
+            CurrentUserStory(
+              screendata: widget.screendata,
+            ),
+            Text(
+              'There is no Stories',
+              style: textstyles['small'],
+            ),
+          ],
+        ),
       );
     } else {
       return Container(
@@ -118,7 +125,6 @@ class _StoryListViewState extends State<StoryListView> {
           children: [
             CurrentUserStory(
               screendata: widget.screendata,
-              userid: widget.userprovider!.uid,
             ),
             ...returnstoryitemslist()
           ],

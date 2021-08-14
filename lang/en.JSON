@@ -9,5 +9,10 @@
     "username hint text": "Enter your username",
     "login switch text": "I already have an account",
     "sign in switch text": "Create an account",
-    "stories":"Stories"
+    "stories":"Stories",
+    "camera":"Camera",
+    "gallery":"Gallery",
+    "photo":"Photo",
+    "video":"Video",
+    "enter a story caption":"Enter a story caption"
 }

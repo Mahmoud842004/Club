@@ -14,6 +14,7 @@ class CurrentStoryLine extends StatefulWidget {
     required this.userslist,
     required this.currentuserid,
     required this.currentuser,
+    required this.ispaused,
   });
   final ScreenData screendata;
   final Function(Story) changecurrentstory;
@@ -24,6 +25,7 @@ class CurrentStoryLine extends StatefulWidget {
   final List<Map<String, dynamic>>? userslist;
   final String currentuserid;
   final bool currentuser;
+  final bool ispaused;
 
   @override
   _CurrentStoryLineState createState() => _CurrentStoryLineState();
@@ -33,6 +35,8 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
   int passedsecounds = 0;
   @override
   void initState() {
+    //TODO:mark story as watched
+
     // FireStore().markstoryaswatched(
     //   widget.currentstory.id,
     //   widget.currentuserid,
@@ -41,27 +45,30 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
     // );
     Timer.periodic(Duration(seconds: 1), (timer) {
       if (mounted) {
-        if (passedsecounds == 10) {
-          if (widget.storieslist.indexOf(widget.currentstory) ==
-              widget.storieslist.length - 1) {
-            if (widget.currentuser) {
-              Navigator.pop(context);
-            } else {
-              if (widget.userindex == widget.userslist!.length - 1) {
+        if (widget.ispaused == false) {
+          if (passedsecounds == 10) {
+            if (widget.storieslist.indexOf(widget.currentstory) ==
+                widget.storieslist.length - 1) {
+              if (widget.currentuser) {
                 Navigator.pop(context);
               } else {
-                widget.controller!.nextPage(
-                    duration: Duration(milliseconds: 300), curve: Curves.ease);
+                if (widget.userindex == widget.userslist!.length - 1) {
+                  Navigator.pop(context);
+                } else {
+                  widget.controller!.nextPage(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.ease);
+                }
               }
+            } else {
+              widget.changecurrentstory(widget.storieslist[
+                  widget.storieslist.indexOf(widget.currentstory) + 1]);
             }
           } else {
-            widget.changecurrentstory(widget.storieslist[
-                widget.storieslist.indexOf(widget.currentstory) + 1]);
+            setState(() {
+              passedsecounds = passedsecounds + 1;
+            });
           }
-        } else {
-          setState(() {
-            passedsecounds = passedsecounds + 1;
-          });
         }
       }
     });
@@ -70,8 +77,9 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
 
   @override
   Widget build(BuildContext context) {
+    //TODO:animated the current story line
     return Expanded(
-      child: AnimatedContainer(
+      child: Container(
         margin: EdgeInsets.symmetric(
           horizontal: widget.screendata.screensize.width * 0.005,
         ),
@@ -79,7 +87,6 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(80),
         ),
-        duration: Duration(milliseconds: 500),
         child: LinearProgressIndicator(
           valueColor: AlwaysStoppedAnimation(Colors.white),
           backgroundColor: Colors.grey,

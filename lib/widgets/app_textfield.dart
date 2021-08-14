@@ -2,62 +2,21 @@ import 'package:club/constants.dart';
 import 'package:club/services/responsive_addaptive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:easy_localization/easy_localization.dart';
 
-class AppTextFormField extends StatelessWidget {
-  final Widget icon;
-  final String hinttext;
+class AppTextField extends StatelessWidget {
   final TextEditingController controller;
-  final bool obscure;
-  final FocusNode focusNode;
-  final FocusNode? nextnode;
-  final String? Function(String?) validator;
+  final String hinttext;
 
-  AppTextFormField({
-    required this.icon,
-    required this.hinttext,
-    required this.controller,
-    required this.obscure,
-    required this.focusNode,
-    required this.validator,
-    this.nextnode,
-  });
-
-  @override
+  AppTextField({required this.controller, required this.hinttext});
   Widget build(BuildContext context) {
     if (ResponsiveAddaptive.isios()) {
-      return CupertinoTextFormFieldRow(
-        placeholder: hinttext.tr(),
-        validator: (value) => validator(value),
-        prefix: icon,
-        onFieldSubmitted: (value) {
-          if (nextnode == null) {
-            FocusScope.of(context).unfocus();
-          } else {
-            FocusScope.of(context).requestFocus(nextnode);
-          }
-        },
-        focusNode: focusNode,
-        obscureText: obscure,
+      return CupertinoTextField(
         controller: controller,
       );
     } else {
-      return TextFormField(
-        validator: (value) => validator(value),
-        onFieldSubmitted: (value) {
-          if (nextnode == null) {
-            FocusScope.of(context).unfocus();
-          } else {
-            FocusScope.of(context).requestFocus(nextnode);
-          }
-        },
-        focusNode: focusNode,
-        obscureText: obscure,
+      return TextField(
         controller: controller,
-        decoration: decoration.copyWith(
-          prefixIcon: icon,
-          hintText: hinttext.tr(),
-        ),
+        decoration: fielddecoration.copyWith(hintText: hinttext),
       );
     }
   }

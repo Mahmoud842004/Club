@@ -52,11 +52,10 @@ class _CurrentUserStoryAvatarState extends State<CurrentUserStoryAvatar> {
       return StoryWidget.currentuser(
         user: widget.user,
         screendata: widget.screendata,
-        ontap: (){
-                    ResponsiveAddaptive.pushnavigate(
-            context: context,
-            screen: StoryPage.currentuser(user: widget.user)
-          );
+        ontap: () {
+          ResponsiveAddaptive.pushnavigate(
+              context: context,
+              screen: StoryPage.currentuser(user: widget.user));
         },
         laststory: story,
       );

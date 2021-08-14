@@ -7,6 +7,7 @@ class Story {
   final Timestamp time;
   final String content;
   final bool watched;
+  final double? videotime;
   List? watches;
 
   factory Story.fromMap(
@@ -18,6 +19,7 @@ class Story {
       time: map['time'],
       content: map['content'],
       watched: map['watched'],
+      videotime: map['video time'],
       watches: watches,
     );
   }
@@ -29,6 +31,7 @@ class Story {
     required this.time,
     required this.content,
     required this.watched,
+    required this.videotime,
     this.watches,
   });
 }

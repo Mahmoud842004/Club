@@ -56,32 +56,29 @@ class StoryWidget extends StatelessWidget {
                             width: 3,
                           ),
                   ),
-                  child: Hero(
-                    tag: user.id,
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundColor:
-                         Colors.grey[400],
-                      backgroundImage: hasprofileimage
-                          ? NetworkImage(
-                              user.profileimage.toString(),
-                            )
-                          : null,
-                      child: hasprofileimage
-                          ? null
-                          : Icon(
-                              ResponsiveAddaptive.isios()
-                                  ? CupertinoIcons.person
-                                  : Icons.person,
-                              color: theme['black'],
-                            ),
-                    ),
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor:
+                       Colors.grey[400],
+                    backgroundImage: hasprofileimage
+                        ? NetworkImage(
+                            user.profileimage.toString(),
+                          )
+                        : null,
+                    child: hasprofileimage
+                        ? null
+                        : Icon(
+                            ResponsiveAddaptive.isios()
+                                ? CupertinoIcons.person
+                                : Icons.person,
+                            color: theme['black'],
+                          ),
                   ),
                 ),
                 iscurrentuser && user.stories.isEmpty
                     ? Positioned(
                         bottom: 0.0,
-                        right: screendata.screensize.width * 0.11,
+                        right: screendata.screensize.width * 0.10,
                         child: CircleAvatar(
                           radius: 10,
                           backgroundColor: theme['pink']!.withOpacity(0.7),

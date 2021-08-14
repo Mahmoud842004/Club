@@ -39,6 +39,7 @@ class _LoginButtonState extends State<LoginButton> {
         Align(
           child: InkWell(
             onTap: () => Auth().authfunction(
+              username:widget.username,
               authType: widget.authtype,
               email: widget.email,
               password: widget.password,

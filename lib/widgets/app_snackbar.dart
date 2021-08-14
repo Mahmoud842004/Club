@@ -5,7 +5,7 @@ SnackBar showsnackbar(String content) {
   return SnackBar(
     content: Text(
       content,
-      style: textstyles['snack bar style'],
+      style: textstyles['small black'],
     ),
     backgroundColor: theme['white'],
   );

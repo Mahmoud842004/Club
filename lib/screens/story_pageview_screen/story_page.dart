@@ -43,35 +43,42 @@ class _StoryPageState extends State<StoryPage> {
   List<Story> storieslist = [];
   bool haserror = false;
   Story? currentstory;
+  bool ispaused = false;
   @override
   void initState() {
     FireStore().getstorieslist(widget.user.stories).then((value) {
       if (value != null) {
         if (value.runtimeType != String) {
-          setState(
-            () {
-              storieslist = value;
-              currentstory =widget.currentuser?storieslist.firstWhere((element){
-                if(element.watched){
-                 return false;
-                }else{
-                  return true;
-                }
-              }): storieslist.firstWhere(
-                (element) {
-                  if (element.watches!.contains(widget.currentuserid)) {
-                    return false;
-                  } else {
-                    return true;
-                  }
-                },
-              );
-            },
-          );
+          if (mounted) {
+            setState(
+              () {
+                storieslist = value;
+                currentstory = widget.currentuser
+                    ? storieslist.firstWhere((element) {
+                        if (element.watched) {
+                          return false;
+                        } else {
+                          return true;
+                        }
+                      })
+                    : storieslist.firstWhere(
+                        (element) {
+                          if (element.watches!.contains(widget.currentuserid)) {
+                            return false;
+                          } else {
+                            return true;
+                          }
+                        },
+                      );
+              },
+            );
+          }
         } else {
-          setState(() {
-            haserror = true;
-          });
+          if (mounted) {
+            setState(() {
+              haserror = true;
+            });
+          }
         }
       }
     });
@@ -83,46 +90,73 @@ class _StoryPageState extends State<StoryPage> {
     final ScreenData screendata = ResponsiveAddaptive.screendata(context);
     return AppScaffold(
       body: SafeArea(
-        child: Stack(
-          children: [
-            ImageOrVideo(
-              haserror: haserror,
-              currentstory: currentstory,
-              changecurrentstory: (newstory) {
-                if (mounted) {
-                  currentstory = newstory;
-                }
-              },
-            ),
-            StoriesLine(
-              storieslist: storieslist,
-              screendata: screendata,
-              currentuser:widget.currentuser,
-              currentstory: currentstory != null ? currentstory : null,
-              changecurrentstory: (story) {
-                if (mounted) {
+        child: GestureDetector(
+          onLongPressStart: (details) {
+            setState(() {
+              ispaused = true;
+            });
+          },
+          onLongPressEnd: (details) {
+            setState(() {
+              ispaused = false;
+            });
+          },
+          child: Stack(
+            children: [
+              ImageOrVideo(
+                haserror: haserror,
+                currentstory: currentstory,
+                ispaused: ispaused,
+                changecurrentstory: (newstory) {
+                  if (mounted) {
+                    currentstory = newstory;
+                  }
+                },
+              ),
+              RightAndLeft(
+                changestory: (story) {
                   setState(() {
                     currentstory = story;
                   });
-                }
-              },
-              storieslenght: widget.user.stories.length,
-              userindex: widget.index,
-              userslist: widget.userslist,
-              controller: widget.controller,
-            ),
-            StoryListTile(
-              screendata: screendata,
-              user: widget.user,
-              currentstory: currentstory != null ? currentstory : null,
-            ),
-            StoryContent(
+                },
+                controller: widget.controller!,
+                currentstory: currentstory != null ? currentstory : null,
+                index: widget.index!,
+                userslist: widget.userslist!,
+                currentuser: widget.currentuser,
+                storieslist: storieslist,
+              ),
+              StoriesLine(
+                storieslist: storieslist,
                 screendata: screendata,
-                currentstory: currentstory != null ? currentstory : null),
-          ],
+                currentuser: widget.currentuser,
+                currentstory: currentstory != null ? currentstory : null,
+                changecurrentstory: (story) {
+                  if (mounted) {
+                    setState(() {
+                      currentstory = story;
+                    });
+                  }
+                },
+                storieslenght: widget.user.stories.length,
+                ispaused: ispaused,
+                userindex: widget.index,
+                userslist: widget.userslist,
+                controller: widget.controller,
+              ),
+              StoryListTile(
+                screendata: screendata,
+                user: widget.user,
+                currentstory: currentstory != null ? currentstory : null,
+              ),
+              StoryContent(
+                screendata: screendata,
+                currentstory: currentstory != null ? currentstory : null,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
-
 }

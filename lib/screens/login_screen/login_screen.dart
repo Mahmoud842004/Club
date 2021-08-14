@@ -19,6 +19,7 @@ class LoginScreen extends StatelessWidget {
                     flex: 3,
                     child: Image.asset(
                       'assets/logo.jfif',
+                      fit: BoxFit.fill,
                     ),
                   ),
                   Expanded(
@@ -34,3 +35,4 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
+

@@ -16,6 +16,7 @@ class StoriesLine extends StatefulWidget {
     required this.controller,
     required this.userslist,
     required this.currentuser,
+    required this.ispaused,
   });
   final List storieslist;
   final int storieslenght;
@@ -26,6 +27,7 @@ class StoriesLine extends StatefulWidget {
   final PageController? controller;
   final List<Map<String, dynamic>>? userslist;
   final bool currentuser;
+  final bool ispaused;
 
   @override
   _StoriesLineState createState() => _StoriesLineState();
@@ -69,6 +71,7 @@ class _StoriesLineState extends State<StoriesLine> {
             userslist: widget.userslist,
             currentuserid: currentuserid,
             currentuser:widget.currentuser,
+            ispaused:widget.ispaused,
           ),
         );
       } else {

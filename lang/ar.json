@@ -9,5 +9,10 @@
     "username hint text": "أدخل اسم المستخدم الخاص بك",
     "login switch text": "لدي حساب بالفعل",
     "sign in switch text": "انشئ حساب",
-    "stories":"حالات"
+    "stories":"حالات",
+    "camera":"كاميرة",
+    "gallery":"معرض الصور",
+    "photo":"صوره",
+    "video":"فيديو",
+    "enter a story caption":"أدخل تعليقًا للحاله"
 }

@@ -39,6 +39,9 @@ dependencies:
   flutter_login_facebook: ^1.0.1
   translator: ^0.1.7
   connectivity_plus: ^1.0.6
+  video_player: ^2.1.12
+  image_picker: ^0.8.3+2
+  random_string: ^2.3.1
 
   
 
