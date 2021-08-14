@@ -33,9 +33,10 @@ class CurrentStoryLine extends StatefulWidget {
 
 class _CurrentStoryLineState extends State<CurrentStoryLine> {
   int passedsecounds = 0;
+  late int finalpassedseconds;
   @override
   void initState() {
-    //TODO:mark story as watched
+    // TODO:mark story as watched
 
     // FireStore().markstoryaswatched(
     //   widget.currentstory.id,
@@ -43,10 +44,13 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
     //   context,
     //   widget.currentuser,
     // );
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    finalpassedseconds = widget.currentstory.videotime == null
+        ? 1000
+        : (widget.currentstory.videotime! * 100).toInt();
+    Timer.periodic(Duration(milliseconds: 100), (timer) {
       if (mounted) {
         if (widget.ispaused == false) {
-          if (passedsecounds == 10) {
+          if (passedsecounds == finalpassedseconds) {
             if (widget.storieslist.indexOf(widget.currentstory) ==
                 widget.storieslist.length - 1) {
               if (widget.currentuser) {
@@ -56,8 +60,9 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
                   Navigator.pop(context);
                 } else {
                   widget.controller!.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.ease);
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.ease,
+                  );
                 }
               }
             } else {
@@ -77,7 +82,6 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO:animated the current story line
     return Expanded(
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -90,7 +94,7 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
         child: LinearProgressIndicator(
           valueColor: AlwaysStoppedAnimation(Colors.white),
           backgroundColor: Colors.grey,
-          value: passedsecounds / 10,
+          value: passedsecounds / finalpassedseconds,
         ),
       ),
     );

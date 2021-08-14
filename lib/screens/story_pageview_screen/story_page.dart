@@ -119,10 +119,10 @@ class _StoryPageState extends State<StoryPage> {
                     currentstory = story;
                   });
                 },
-                controller: widget.controller!,
+                controller: widget.controller,
                 currentstory: currentstory != null ? currentstory : null,
-                index: widget.index!,
-                userslist: widget.userslist!,
+                index: widget.index,
+                userslist: widget.userslist,
                 currentuser: widget.currentuser,
                 storieslist: storieslist,
               ),

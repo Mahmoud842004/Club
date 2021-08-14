@@ -7,7 +7,7 @@ class Story {
   final Timestamp time;
   final String content;
   final bool watched;
-  final double? videotime;
+  final int? videotime;
   List? watches;
 
   factory Story.fromMap(
