@@ -8,10 +8,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class StoryListTile extends StatelessWidget {
-  StoryListTile(
-      {required this.screendata,
-      required this.user,
-      required this.currentstory});
+  StoryListTile({
+    required this.screendata,
+    required this.user,
+    required this.currentstory,
+  });
 
   final ScreenData screendata;
   final Users user;
@@ -31,7 +32,7 @@ class StoryListTile extends StatelessWidget {
                   if (snapshot.hasData) {
                     return Text(
                       snapshot.data.toString(),
-                      style: textstyles['small grey'],
+                      style: textstyles['small white'],
                     );
                   } else {
                     return SizedBox.shrink();

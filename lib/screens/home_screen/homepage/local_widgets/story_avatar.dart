@@ -51,14 +51,12 @@ class _StoryAvatarState extends State<StoryAvatar> {
           setState(() {
             iswatched = false;
           });
-          Future.delayed(Duration(milliseconds: int.parse('${widget.index}00'))).then((value) {
-            widget.addtolist(
-              {
-                'user': widget.user,
-                'index': widget.index,
-              },
-            );
-          });
+          widget.addtolist(
+            {
+              'user': widget.user,
+              'index': widget.index,
+            },
+          );
         }
       }
     });

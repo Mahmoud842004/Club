@@ -58,8 +58,7 @@ class StoryWidget extends StatelessWidget {
                   ),
                   child: CircleAvatar(
                     radius: 30,
-                    backgroundColor:
-                       Colors.grey[400],
+                    backgroundColor: Colors.grey[400],
                     backgroundImage: hasprofileimage
                         ? NetworkImage(
                             user.profileimage.toString(),

@@ -24,6 +24,7 @@ class _CurrentUserStoryAvatarState extends State<CurrentUserStoryAvatar> {
   Story? story;
   @override
   void initState() {
+    //TODO:check case when adding a story while the last story is watched 
     streamSubscription =
         FireStore(id: widget.user.stories.last).storystream.listen((event) {
       // ignore: unnecessary_null_comparison
@@ -55,7 +56,7 @@ class _CurrentUserStoryAvatarState extends State<CurrentUserStoryAvatar> {
         ontap: () {
           ResponsiveAddaptive.pushnavigate(
               context: context,
-              screen: StoryPage.currentuser(user: widget.user));
+              screen: StoryPage.currentuser(user: widget.user,));
         },
         laststory: story,
       );

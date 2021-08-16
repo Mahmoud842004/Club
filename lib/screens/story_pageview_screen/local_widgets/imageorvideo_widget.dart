@@ -20,9 +20,9 @@ class ImageOrVideo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      height: double.infinity,
       color: Colors.grey[800],
+    width: double.infinity,
+    height: double.infinity,
       child: haserror
           ? Align(
               alignment: Alignment.center,
@@ -40,11 +40,12 @@ class ImageOrVideo extends StatelessWidget {
               : currentstory!.imageurl != null
                   ? Image.network(
                       currentstory!.imageurl.toString(),
+                      filterQuality: FilterQuality.high,
                       fit: BoxFit.fill,
                     )
                   : StoryVideoPlayer(
                       currentstory: currentstory!,
-                      ispaused:ispaused,
+                      ispaused: ispaused,
                     ),
     );
   }

@@ -14,7 +14,8 @@ class Camera {
     if (imagesource == 'camera' && filetype == 'photo') {
       file = await ImagePicker().pickImage(
         source: ImageSource.camera,
-        maxWidth: 500,
+        maxWidth: 300,
+        imageQuality: 100,
       );
     } else if (imagesource == 'camera' && filetype == 'video') {
       file = await ImagePicker().pickVideo(
@@ -26,7 +27,8 @@ class Camera {
     } else if (imagesource == 'gallery' && filetype == 'photo') {
       file = await ImagePicker().pickImage(
         source: ImageSource.gallery,
-        maxWidth: 500,
+        maxWidth: 300,
+        imageQuality: 100,
       );
     } else {
       file = await ImagePicker().pickVideo(

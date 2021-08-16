@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:club/models/screendata.dart';
 import 'package:club/models/story.dart';
+import 'package:club/services/firestore.dart';
 import 'package:flutter/material.dart';
 
 class CurrentStoryLine extends StatefulWidget {
@@ -36,18 +37,17 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
   late int finalpassedseconds;
   @override
   void initState() {
-    // TODO:mark story as watched
-
-    // FireStore().markstoryaswatched(
-    //   widget.currentstory.id,
-    //   widget.currentuserid,
-    //   context,
-    //   widget.currentuser,
-    // );
+    print(widget.currentstory.watched);
+    FireStore().markstoryaswatched(
+      widget.currentstory.id,
+      widget.currentuserid,
+      context,
+      widget.currentuser,
+    );
     finalpassedseconds = widget.currentstory.videotime == null
-        ? 1000
-        : (widget.currentstory.videotime! * 100).toInt();
-    Timer.periodic(Duration(milliseconds: 100), (timer) {
+        ? 10000
+        : (widget.currentstory.videotime! * 1000).toInt();
+    Timer.periodic(Duration(milliseconds: 10), (timer) {
       if (mounted) {
         if (widget.ispaused == false) {
           if (passedsecounds == finalpassedseconds) {
@@ -55,24 +55,30 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
                 widget.storieslist.length - 1) {
               if (widget.currentuser) {
                 Navigator.pop(context);
+                timer.cancel();
               } else {
                 if (widget.userindex == widget.userslist!.length - 1) {
                   Navigator.pop(context);
+                  timer.cancel();
                 } else {
                   widget.controller!.nextPage(
                     duration: Duration(milliseconds: 300),
                     curve: Curves.ease,
                   );
+                  timer.cancel();
                 }
               }
             } else {
               widget.changecurrentstory(widget.storieslist[
                   widget.storieslist.indexOf(widget.currentstory) + 1]);
+              timer.cancel();
             }
           } else {
-            setState(() {
-              passedsecounds = passedsecounds + 1;
-            });
+            if (mounted) {
+              setState(() {
+                passedsecounds = passedsecounds + 10;
+              });
+            }
           }
         }
       }

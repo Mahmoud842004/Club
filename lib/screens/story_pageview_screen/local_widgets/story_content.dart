@@ -10,20 +10,24 @@ class StoryContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (currentstory != null) {
-      return Positioned(
-        height: screendata.screensize.height * 0.05,
-        right: 0.0,
-        left: 0.0,
-        bottom: screendata.screensize.height * 0.1,
-        child: Container(
-          alignment: Alignment.center,
-          color: Colors.black87,
-          child: Text(
-            currentstory!.content,
-            style: textstyles['small white'],
+      if (currentstory!.content =="") {
+        return SizedBox.shrink();
+      } else {
+        return Positioned(
+          height: screendata.screensize.height * 0.05,
+          right: 0.0,
+          left: 0.0,
+          bottom: screendata.screensize.height * 0.1,
+          child: Container(
+            alignment: Alignment.center,
+            color: Colors.black87,
+            child: Text(
+              currentstory!.content,
+              style: textstyles['small white'],
+            ),
           ),
-        ),
-      );
+        );
+      }
     } else {
       return SizedBox.shrink();
     }

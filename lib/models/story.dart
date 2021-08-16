@@ -34,4 +34,5 @@ class Story {
     required this.videotime,
     this.watches,
   });
+
 }

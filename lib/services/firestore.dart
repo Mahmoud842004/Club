@@ -151,4 +151,8 @@ class FireStore {
       ScaffoldMessenger.of(context).showSnackBar(showsnackbar(translate));
     }
   }
+
+  Stream<List<String>> get storywatchingstream{
+    return _stories.doc(id).collection('watches').snapshots().map((snapshot) => convertquerytolist(snapshot));
+  }
 }

@@ -88,6 +88,22 @@ InputDecoration fielddecoration = InputDecoration(
   ),
 );
 
+InputDecoration storydecoration = InputDecoration(
+  hintStyle: textstyles['small white'],
+  focusedBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(22),
+    borderSide: BorderSide(
+      color: Color.fromRGBO(246, 249, 248, 1),
+    ),
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(22),
+    borderSide: BorderSide(
+      color: Color.fromRGBO(246, 249, 248, 1),
+    ),
+  ),
+);
+
 List tabslist = [
   Icon(ResponsiveAddaptive.isios() ? CupertinoIcons.home : Icons.home),
   Icon(ResponsiveAddaptive.isios() ? CupertinoIcons.search : Icons.search),

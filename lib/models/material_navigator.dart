@@ -7,6 +7,7 @@ class MaterialNavigator extends MaterialPageRoute {
   final Widget Function(BuildContext) builder;
   MaterialNavigator({required this.builder}) : super(builder: builder);
 
+
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
@@ -25,4 +26,8 @@ class MaterialNavigator extends MaterialPageRoute {
       );
     }
   }
+
+  @override
+  Duration get transitionDuration => Duration(milliseconds: 500);
+
 }
