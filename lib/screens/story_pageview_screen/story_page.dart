@@ -114,6 +114,7 @@ class _StoryPageState extends State<StoryPage> {
     final ScreenData screendata = ResponsiveAddaptive.screendata(context);
     final bottompadding = MediaQuery.of(context).viewPadding.bottom;
     return AppScaffold(
+      color: Colors.grey[800],
       body: SafeArea(
         child: GestureDetector(
           onLongPressStart: (details) {
@@ -130,6 +131,7 @@ class _StoryPageState extends State<StoryPage> {
             children: [
               ImageOrVideo(
                 haserror: haserror,
+                screendata: screendata,
                 currentstory: currentstory,
                 ispaused: ispaused,
                 changecurrentstory: (newstory) {
@@ -179,8 +181,13 @@ class _StoryPageState extends State<StoryPage> {
                 currentstory: currentstory != null ? currentstory : null,
               ),
               widget.currentuser
-              //TODO: make watching text
-                  ? Container()
+                  //TODO: make watching text
+                  ? currentstory == null
+                      ? SizedBox.shrink()
+                      : WatchesIndicator(
+                          currentstory: currentstory,
+                          screendata: screendata,
+                        )
                   : BottomRow(
                       currentstory: currentstory,
                       user: widget.user,

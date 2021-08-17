@@ -1,3 +1,4 @@
+import 'package:club/models/screendata.dart';
 import 'package:club/models/story.dart';
 import 'package:club/screens/story_pageview_screen/local_widgets/story_videoplayer.dart';
 import 'package:club/services/responsive_addaptive.dart';
@@ -9,20 +10,23 @@ class ImageOrVideo extends StatelessWidget {
   final Story? currentstory;
   final Function(Story) changecurrentstory;
   final bool ispaused;
+  final ScreenData screendata;
 
   ImageOrVideo({
     required this.haserror,
     required this.currentstory,
     required this.changecurrentstory,
     required this.ispaused,
+    required this.screendata,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey[800],
-    width: double.infinity,
-    height: double.infinity,
+    return Positioned(
+      left: 0.0,
+      right: 0.0,
+      top: screendata.screensize.height * 0.2,
+      bottom: screendata.screensize.height * 0.2,
       child: haserror
           ? Align(
               alignment: Alignment.center,

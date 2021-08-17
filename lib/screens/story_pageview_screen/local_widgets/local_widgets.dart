@@ -5,3 +5,4 @@ export 'story_content.dart';
 export 'rightandleft.dart';
 export 'bottom_row.dart';
 export 'stories_upper_line.dart';
+export 'watches_indicator.dart';

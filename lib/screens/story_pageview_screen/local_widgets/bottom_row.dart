@@ -3,6 +3,7 @@ import 'package:club/models/screendata.dart';
 import 'package:club/models/story.dart';
 import 'package:club/models/users.dart';
 import 'package:club/services/responsive_addaptive.dart';
+import 'package:club/widgets/app_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,7 @@ class BottomRow extends StatelessWidget {
         children: [
           Expanded(
             flex: 15,
-            child: TextField(
+            child: AppTextField(
               controller: controller,
               decoration:
                   storydecoration.copyWith(hintText: 'Reply to a story'),

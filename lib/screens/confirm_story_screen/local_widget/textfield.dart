@@ -1,6 +1,5 @@
 import 'package:club/constants.dart';
 import 'package:club/widgets/app_textfield.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmTextField extends StatelessWidget {
@@ -15,7 +14,7 @@ class ConfirmTextField extends StatelessWidget {
         color: theme['white']!.withOpacity(0.5),
         child: AppTextField(
           controller: controller,
-          hinttext: 'enter a story caption'.tr(),
+          decoration: fielddecoration.copyWith(hintText: 'Enter a caption'),
         ),
       ),
     );

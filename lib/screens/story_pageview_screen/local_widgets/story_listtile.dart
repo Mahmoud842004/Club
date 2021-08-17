@@ -51,6 +51,7 @@ class StoryListTile extends StatelessWidget {
           onTap: () => Navigator.of(context).pop(),
           child: Icon(
             ResponsiveAddaptive.isios() ? CupertinoIcons.xmark : Icons.close,
+            color: theme['white'],
           ),
         ),
         leading: CircleAvatar(
