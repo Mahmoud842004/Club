@@ -9,17 +9,16 @@ import 'package:flutter/material.dart';
 
 class StoryListTile extends StatelessWidget {
   StoryListTile({
-    required this.screendata,
     required this.user,
     required this.currentstory,
   });
 
-  final ScreenData screendata;
   final Users user;
   final Story? currentstory;
 
   @override
   Widget build(BuildContext context) {
+    final ScreenData screendata = ResponsiveAddaptive.screendata(context);
     final bool hasprofileimage = user.profileimage == null ? false : true;
     return Positioned(
       top: screendata.screensize.height * 0.03,

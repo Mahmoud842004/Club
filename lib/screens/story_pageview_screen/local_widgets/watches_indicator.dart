@@ -9,10 +9,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class WatchesIndicator extends StatefulWidget {
-  WatchesIndicator({required this.currentstory, required this.screendata});
+  WatchesIndicator({required this.currentstory});
 
   final Story? currentstory;
-  final ScreenData screendata;
 
   @override
   _WatchesIndicatorState createState() => _WatchesIndicatorState();
@@ -47,10 +46,11 @@ class _WatchesIndicatorState extends State<WatchesIndicator> {
 
   @override
   Widget build(BuildContext context) {
+    final ScreenData screendata = ResponsiveAddaptive.screendata(context);
     return Positioned(
-      bottom: widget.screendata.screensize.height * 0.05,
-      left: widget.screendata.screensize.width * 0.05,
-      right: widget.screendata.screensize.width * 0.05,
+      bottom: screendata.screensize.height * 0.02,
+      left: screendata.screensize.width * 0.05,
+      right: screendata.screensize.width * 0.05,
       child: Row(
         children: [
           Icon(
@@ -59,7 +59,7 @@ class _WatchesIndicatorState extends State<WatchesIndicator> {
                 : Icons.visibility,
             color: theme['white'],
           ),
-          SizedBox(width: widget.screendata.screensize.width * 0.02),
+          SizedBox(width: screendata.screensize.width * 0.02),
           watcheslist == null
               ? SizedBox.shrink()
               : Text(

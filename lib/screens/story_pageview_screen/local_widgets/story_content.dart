@@ -1,16 +1,17 @@
 import 'package:club/constants.dart';
 import 'package:club/models/screendata.dart';
 import 'package:club/models/story.dart';
+import 'package:club/services/responsive_addaptive.dart';
 import 'package:flutter/material.dart';
 
 class StoryContent extends StatelessWidget {
-  final ScreenData screendata;
   final Story? currentstory;
-  StoryContent({required this.screendata, required this.currentstory});
+  StoryContent({required this.currentstory});
   @override
   Widget build(BuildContext context) {
+    final ScreenData screendata = ResponsiveAddaptive.screendata(context);
     if (currentstory != null) {
-      if (currentstory!.content =="") {
+      if (currentstory!.content == "") {
         return SizedBox.shrink();
       } else {
         return Positioned(

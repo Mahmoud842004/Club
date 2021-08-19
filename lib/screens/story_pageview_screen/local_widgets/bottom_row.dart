@@ -11,16 +11,15 @@ class BottomRow extends StatelessWidget {
   BottomRow({
     required this.currentstory,
     required this.user,
-    required this.screendata,
     required this.bottompadding,
   });
   final Story? currentstory;
   final Users user;
-  final ScreenData screendata;
   final double bottompadding;
 
   @override
   Widget build(BuildContext context) {
+    final ScreenData screendata = ResponsiveAddaptive.screendata(context);
     TextEditingController controller = TextEditingController();
     //TODO:add send messages feature
     return Positioned(

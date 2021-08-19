@@ -46,7 +46,7 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
     );
     finalpassedseconds = widget.currentstory.videotime == null
         ? 10000
-        : (widget.currentstory.videotime! * 1000).toInt();
+        : ((widget.currentstory.videotime! * 1000)+300).toInt();
     Timer.periodic(Duration(milliseconds: 10), (timer) {
       if (mounted) {
         if (widget.ispaused == false) {

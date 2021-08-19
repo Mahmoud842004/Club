@@ -1,12 +1,19 @@
+import 'package:club/constants.dart';
 import 'package:club/models/story.dart';
+import 'package:club/widgets/app_circular_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class StoryVideoPlayer extends StatefulWidget {
   final Story currentstory;
   final bool ispaused;
+  final Function(bool) changepause;
 
-  StoryVideoPlayer({required this.currentstory, required this.ispaused});
+  StoryVideoPlayer({
+    required this.currentstory,
+    required this.ispaused,
+    required this.changepause,
+  });
 
   @override
   _StoryVideoPlayerState createState() => _StoryVideoPlayerState();
@@ -20,10 +27,18 @@ class _StoryVideoPlayerState extends State<StoryVideoPlayer> {
       widget.currentstory.videourl.toString(),
     )
       ..addListener(() {
-        setState(() {});
+        if (mounted) {
+          setState(() {});
+          if (controller.value.isPlaying && widget.ispaused) {
+            widget.changepause(false);
+          } else if (controller.value.isPlaying == false &&
+              widget.ispaused == false) {
+            widget.changepause(true);
+          }
+        }
       })
       ..setLooping(false)
-      ..initialize();
+      ..initialize().then((value) => widget.changepause(false));
     super.initState();
   }
 
@@ -35,8 +50,9 @@ class _StoryVideoPlayerState extends State<StoryVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    if (controller.value.isInitialized) {
-      return SizedBox.shrink();
+    // TODO: fixing pauses of video put line not pause due to internet connection
+    if (controller.value.isInitialized == false) {
+      return AppCircularIndicator(color: theme['black']!);
     } else {
       if (widget.ispaused) {
         controller.pause();

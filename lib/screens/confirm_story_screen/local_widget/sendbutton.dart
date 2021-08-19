@@ -4,6 +4,7 @@ import 'package:club/models/screendata.dart';
 import 'package:club/models/users.dart';
 import 'package:club/services/firestore.dart';
 import 'package:club/services/responsive_addaptive.dart';
+import 'package:club/widgets/app_circular_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -51,14 +52,7 @@ class _ActionButtonState extends State<ActionButton> {
         videotime: widget.videoduration,
       ),
       icon: isloading
-          ? Container(
-              width: widget.screendata.screensize.width * 0.065,
-              height: widget.screendata.screensize.height * 0.025,
-              child: CircularProgressIndicator.adaptive(
-                backgroundColor: theme['white'],
-                valueColor: AlwaysStoppedAnimation(theme['black']),
-              ),
-            )
+          ? AppCircularIndicator(color: theme['black']!)
           : Icon(
               ResponsiveAddaptive.isios()
                   ? CupertinoIcons.paperplane_fill

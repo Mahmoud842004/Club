@@ -26,6 +26,7 @@ class FireStore {
       {required String username,
       required String userid,
       String? imageurl}) async {
+        
     await _users.doc(userid).set({
       'name': username,
       'profile image': imageurl,
@@ -118,41 +119,59 @@ class FireStore {
     required BuildContext context,
     required int? videotime,
   }) async {
-    try {
-      var connection = await Connectivity().checkConnectivity();
-      if (connection != ConnectivityResult.none) {
-        setstate(true);
-        String storyid = randomString(20);
-        String url = await Storage().addandgetstoryfile(file, storyid);
-        await _stories.doc(storyid).set({
+    //TODO:
+    var connection = await Connectivity().checkConnectivity();
+    if (connection != ConnectivityResult.none) {
+      setstate(true);
+      String storyid = randomString(20);
+      Storage().addandgetstoryfile(file, storyid).then((url) {
+        _stories.doc(storyid).set({
           'content': content,
           'imageurl': filetype == 'photo' ? url : null,
           'videourl': filetype == 'video' ? url : null,
           'watched': false,
           'time': Timestamp.now(),
           'video time': videotime,
+        }).then((value) {
+          List newstorieslist = user.stories;
+          newstorieslist.add(storyid);
+          _users.doc(user.id).update({
+            'stories': newstorieslist,
+          }).then((value) async {
+            var translate = await ResponsiveAddaptive.translate(
+                context, 'The Story is posted');
+            ScaffoldMessenger.of(context).showSnackBar(showsnackbar(translate));
+          });
         });
-        List newstorieslist = user.stories;
-        newstorieslist.add(storyid);
-        await _users.doc(user.id).update({
-          'stories': newstorieslist,
-        });
-        setstate(false);
-        Navigator.pop(context);
-      } else {
+      }).onError((error, stackTrace) async {
         var translate = await ResponsiveAddaptive.translate(
-            context, 'There is no internet connection');
+          context,
+          error.toString(),
+        );
         ScaffoldMessenger.of(context).showSnackBar(showsnackbar(translate));
-      }
-    } catch (e) {
-      setstate(false);
-      var translate =
-          await ResponsiveAddaptive.translate(context, e.toString());
+      });
+      Future.delayed(Duration(seconds: 1)).then(
+        (value) async {
+          setstate(false);
+          var translate = await ResponsiveAddaptive.translate(
+              context, 'The Story is posting now');
+          ScaffoldMessenger.of(context).showSnackBar(showsnackbar(translate));
+          Navigator.pop(context);
+          Navigator.pop(context);
+        },
+      );
+    } else {
+      var translate = await ResponsiveAddaptive.translate(
+          context, 'There is no internet connection');
       ScaffoldMessenger.of(context).showSnackBar(showsnackbar(translate));
     }
   }
 
-  Stream<List<String>> get storywatchingstream{
-    return _stories.doc(id).collection('watches').snapshots().map((snapshot) => convertquerytolist(snapshot));
+  Stream<List<String>> get storywatchingstream {
+    return _stories
+        .doc(id)
+        .collection('watches')
+        .snapshots()
+        .map((snapshot) => convertquerytolist(snapshot));
   }
 }

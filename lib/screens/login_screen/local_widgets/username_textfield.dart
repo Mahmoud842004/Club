@@ -24,10 +24,8 @@ class UsernameTextField extends StatelessWidget {
       duration: Duration(milliseconds: 80),
       child: LoginTextField(
         validator: (value) {
-          if (value!.split('').length < 3) {
-            return 'This username is too short';
-          } else if (value.split('').length > 7) {
-            return 'This username is too long';
+          if (value!.trim().length==0) {
+            return 'The user name mustn,t be nothing';
           }
           return null;
         },

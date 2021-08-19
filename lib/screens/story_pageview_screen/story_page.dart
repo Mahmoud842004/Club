@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:club/models/screendata.dart';
 import 'package:club/models/story.dart';
 import 'package:club/models/users.dart';
 import 'local_widgets/local_widgets.dart';
 import 'package:club/services/firestore.dart';
-import 'package:club/services/responsive_addaptive.dart';
 import 'package:club/widgets/app_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,39 +50,31 @@ class _StoryPageState extends State<StoryPage> {
           if (mounted) {
             setState(() {
               storieslist = value;
-            });
-            if (widget.currentuser) {
-              setState(
-                () {
-                  currentstory = storieslist.firstWhere(
-                    (element) {
-                      if (element.watched) {
-                        return false;
-                      } else {
-                        return true;
-                      }
-                    },
-                    orElse: () => Story(
-                      id: 'null',
-                      watched: false,
-                      content: 'null',
-                      time: Timestamp.now(),
-                      imageurl: null,
-                      videotime: null,
-                      videourl: null,
-                      watches: null,
-                    ),
-                  );
-                },
-              );
+              if (widget.currentuser) {
+                currentstory = storieslist.firstWhere(
+                  (element) {
+                    if (element.watched) {
+                      return false;
+                    } else {
+                      return true;
+                    }
+                  },
+                  orElse: () => Story(
+                    id: 'null',
+                    watched: false,
+                    content: 'null',
+                    time: Timestamp.now(),
+                    imageurl: null,
+                    videotime: null,
+                    videourl: null,
+                    watches: null,
+                  ),
+                );
 
-              if (currentstory!.id == 'null') {
-                setState(() {
+                if (currentstory!.id == 'null') {
                   currentstory = storieslist.first;
-                });
-              }
-            } else {
-              setState(() {
+                }
+              } else {
                 currentstory = storieslist.firstWhere(
                   (element) {
                     if (element.watches!.contains(widget.currentuserid)) {
@@ -94,7 +84,10 @@ class _StoryPageState extends State<StoryPage> {
                     }
                   },
                 );
-              });
+              }
+            });
+            if (currentstory!.videourl != null) {
+              ispaused = true;
             }
           }
         } else {
@@ -111,7 +104,6 @@ class _StoryPageState extends State<StoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final ScreenData screendata = ResponsiveAddaptive.screendata(context);
     final bottompadding = MediaQuery.of(context).viewPadding.bottom;
     return AppScaffold(
       color: Colors.grey[800],
@@ -130,8 +122,14 @@ class _StoryPageState extends State<StoryPage> {
           child: Stack(
             children: [
               ImageOrVideo(
+                changepause: (bool newbool) {
+                  if (mounted) {
+                    setState(() {
+                      ispaused = newbool;
+                    });
+                  }
+                },
                 haserror: haserror,
-                screendata: screendata,
                 currentstory: currentstory,
                 ispaused: ispaused,
                 changecurrentstory: (newstory) {
@@ -155,7 +153,6 @@ class _StoryPageState extends State<StoryPage> {
               ),
               StoriesLine(
                 storieslist: storieslist,
-                screendata: screendata,
                 currentuser: widget.currentuser,
                 currentstory: currentstory != null ? currentstory : null,
                 changecurrentstory: (story) {
@@ -172,12 +169,10 @@ class _StoryPageState extends State<StoryPage> {
                 controller: widget.controller,
               ),
               StoryListTile(
-                screendata: screendata,
                 user: widget.user,
                 currentstory: currentstory != null ? currentstory : null,
               ),
               StoryContent(
-                screendata: screendata,
                 currentstory: currentstory != null ? currentstory : null,
               ),
               widget.currentuser
@@ -186,12 +181,10 @@ class _StoryPageState extends State<StoryPage> {
                       ? SizedBox.shrink()
                       : WatchesIndicator(
                           currentstory: currentstory,
-                          screendata: screendata,
                         )
                   : BottomRow(
                       currentstory: currentstory,
                       user: widget.user,
-                      screendata: screendata,
                       bottompadding: bottompadding,
                     )
             ],

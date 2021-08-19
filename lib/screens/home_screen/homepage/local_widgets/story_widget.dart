@@ -97,7 +97,19 @@ class StoryWidget extends StatelessWidget {
             ),
           ),
           SizedBox(height: screendata.screensize.height * 0.01),
-          Text(user.name, style: textstyles['very small'])
+          LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return SizedBox(
+                width:constraints.maxWidth,
+                child: Text(
+                  user.name,
+                  style: textstyles['very small'],
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
