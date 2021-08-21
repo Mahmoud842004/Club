@@ -1,6 +1,7 @@
 import 'package:club/models/screendata.dart';
 import 'package:club/models/story.dart';
 import 'package:club/services/responsive_addaptive.dart';
+import 'package:club/state_mangment/story_pause.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,6 @@ class StoriesLine extends StatefulWidget {
     required this.controller,
     required this.userslist,
     required this.currentuser,
-    required this.ispaused,
   });
   final List storieslist;
   final int storieslenght;
@@ -26,7 +26,6 @@ class StoriesLine extends StatefulWidget {
   final PageController? controller;
   final List<Map<String, dynamic>>? userslist;
   final bool currentuser;
-  final bool ispaused;
 
   @override
   _StoriesLineState createState() => _StoriesLineState();
@@ -54,24 +53,27 @@ class _StoriesLineState extends State<StoriesLine> {
     return lineswidgets;
   }
 
-  List<Widget> storieslines(String currentuserid,ScreenData screendata) {
+  List<Widget> storieslines(String currentuserid, ScreenData screendata) {
     List<Widget> storieslines = [];
     for (var story in widget.storieslist) {
       if (widget.storieslist.indexOf(widget.currentstory) ==
           widget.storieslist.indexOf(story)) {
         storieslines.add(
-          CurrentStoryLine(
-            screendata: screendata,
-            changecurrentstory: widget.changecurrentstory,
-            storieslist: widget.storieslist,
-            currentstory: widget.currentstory!,
-            controller: widget.controller,
-            userindex: widget.userindex,
-            userslist: widget.userslist,
-            currentuserid: currentuserid,
-            currentuser:widget.currentuser,
-            ispaused:widget.ispaused,
-          ),
+          Builder(builder: (context) {
+            var pauseprovider = Provider.of<StoryPause>(context);
+            return CurrentStoryLine(
+              screendata: screendata,
+              changecurrentstory: widget.changecurrentstory,
+              storieslist: widget.storieslist,
+              currentstory: widget.currentstory!,
+              controller: widget.controller,
+              userindex: widget.userindex,
+              userslist: widget.userslist,
+              currentuserid: currentuserid,
+              currentuser: widget.currentuser,
+              ispaused: pauseprovider.ispaused,
+            );
+          }),
         );
       } else {
         storieslines.add(
@@ -101,13 +103,14 @@ class _StoriesLineState extends State<StoriesLine> {
     final ScreenData screendata = ResponsiveAddaptive.screendata(context);
     User? user = Provider.of<User?>(context);
     return Positioned(
-      top:screendata.screensize.height * 0.008,
+      top: screendata.screensize.height * 0.008,
       left: 0.0,
       right: 0.0,
       child: Row(
         children: [
           if (widget.currentstory == null) ...loadingstorieslines(screendata),
-          if (widget.currentstory != null) ...storieslines(user!.uid,screendata),
+          if (widget.currentstory != null)
+            ...storieslines(user!.uid, screendata),
         ],
       ),
     );

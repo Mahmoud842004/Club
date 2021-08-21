@@ -11,11 +11,15 @@ class WebBody extends StatelessWidget {
           flex: 1,
         ),
         Expanded(
-          child: Container(),
+          child: Container(
+            color: Colors.black,
+          ),
           flex: 3,
         ),
         Expanded(
-          child: Container(),
+          child: Container(
+            color:Colors.yellow,
+          ),
           flex: 2,
         )
       ],

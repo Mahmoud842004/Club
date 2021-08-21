@@ -1,4 +1,5 @@
 import 'package:club/screens/story_pageview_screen/story_page.dart';
+import 'package:club/state_mangment/story_pause.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -46,12 +47,15 @@ class _StoryPageViewScreenState extends State<StoryPageViewScreen> {
     User? user = Provider.of<User?>(context);
     return PageView.builder(
       itemBuilder: (context, index) {
-        return StoryPage(
-          user: widget.usersunseenedstories[index]['user'],
-          index: index,
-          currentuserid: user!.uid,
-          controller: pagecontroller,
-          userslist: widget.usersunseenedstories,
+        return ChangeNotifierProvider<StoryPause>.value(
+          value: StoryPause(),
+          child: StoryPage(
+            user: widget.usersunseenedstories[index]['user'],
+            index: index,
+            currentuserid: user!.uid,
+            controller: pagecontroller,
+            userslist: widget.usersunseenedstories,
+          ),
         );
       },
       itemCount: widget.usersunseenedstories.length,

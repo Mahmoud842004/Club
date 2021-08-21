@@ -52,7 +52,11 @@ class _ActionButtonState extends State<ActionButton> {
         videotime: widget.videoduration,
       ),
       icon: isloading
-          ? AppCircularIndicator(color: theme['black']!)
+          ? Container(
+              width: widget.screendata.screensize.width * 0.07,
+              height: widget.screendata.screensize.height * 0.035,
+              child: AppCircularIndicator(color: theme['black']!),
+            )
           : Icon(
               ResponsiveAddaptive.isios()
                   ? CupertinoIcons.paperplane_fill

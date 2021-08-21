@@ -5,24 +5,37 @@ import 'package:flutter/material.dart';
 
 import 'local_widgets/local_widgets.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  late TabController controller;
+
+  @override
+  void initState() {
+    controller = TabController(
+      length: 5,
+      vsync: this,
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isweb =
         ResponsiveAddaptive.screendata(context).screentype == ScreenType.web
             ? true
             : false;
-    return DefaultTabController(
-      length: 5,
-      child: AppScaffold(
-        appbar: isweb
-            ? AppBar(
-                title: WebAppBarBody(),
-              )
-            : null,
-        body: isweb ? WebBody() : PhoneBody(),
-        bottomnavigationbar: isweb ? null : PhoneNavigationBar(),
-      ),
+    return AppScaffold(
+      appbar: isweb
+          ? AppBar(
+              title: WebAppBarBody(),
+            )
+          : null,
+      body: isweb ? WebBody() : PhoneBody(controller:controller),
+      bottomnavigationbar: isweb ? null : PhoneNavigationBar(controller:controller),
     );
   }
 }

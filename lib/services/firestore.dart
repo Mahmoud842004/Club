@@ -26,7 +26,6 @@ class FireStore {
       {required String username,
       required String userid,
       String? imageurl}) async {
-        
     await _users.doc(userid).set({
       'name': username,
       'profile image': imageurl,
@@ -119,7 +118,6 @@ class FireStore {
     required BuildContext context,
     required int? videotime,
   }) async {
-    //TODO:
     var connection = await Connectivity().checkConnectivity();
     if (connection != ConnectivityResult.none) {
       setstate(true);
@@ -137,10 +135,6 @@ class FireStore {
           newstorieslist.add(storyid);
           _users.doc(user.id).update({
             'stories': newstorieslist,
-          }).then((value) async {
-            var translate = await ResponsiveAddaptive.translate(
-                context, 'The Story is posted');
-            ScaffoldMessenger.of(context).showSnackBar(showsnackbar(translate));
           });
         });
       }).onError((error, stackTrace) async {
@@ -156,7 +150,6 @@ class FireStore {
           var translate = await ResponsiveAddaptive.translate(
               context, 'The Story is posting now');
           ScaffoldMessenger.of(context).showSnackBar(showsnackbar(translate));
-          Navigator.pop(context);
           Navigator.pop(context);
         },
       );

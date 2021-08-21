@@ -11,12 +11,16 @@ class ConfirmStoryVideo extends StatefulWidget {
   final ScreenData screendata;
   final Function(int secounds) getvideoduration;
 
-  ConfirmStoryVideo({required this.file, required this.screendata,required this.getvideoduration});
+  ConfirmStoryVideo(
+      {required this.file,
+      required this.screendata,
+      required this.getvideoduration});
   @override
   _ConfirmStoryVideoState createState() => _ConfirmStoryVideoState();
 }
 
-class _ConfirmStoryVideoState extends State<ConfirmStoryVideo> {
+class _ConfirmStoryVideoState extends State<ConfirmStoryVideo>
+    with WidgetsBindingObserver {
   late VideoPlayerController controller;
   @override
   void initState() {
@@ -31,6 +35,16 @@ class _ConfirmStoryVideoState extends State<ConfirmStoryVideo> {
         widget.getvideoduration(controller.value.duration.inSeconds);
       });
     super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused && controller.value.isInitialized) {
+      controller.pause();
+    } else if (state == AppLifecycleState.resumed &&
+        controller.value.isInitialized) {
+      controller.play();
+    }
   }
 
   @override

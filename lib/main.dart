@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:auto_direction/auto_direction.dart';
 import 'package:club/models/users.dart';
 import 'package:club/screens/whole_screen.dart';
@@ -64,7 +65,7 @@ class MyApp extends StatelessWidget {
                     supportedLocales: context.supportedLocales,
                     locale: context.locale,
                     localizationsDelegates: context.localizationDelegates,
-                    home:WholeScreen(),
+                    home: WholeScreen(),
                   ),
           );
         },

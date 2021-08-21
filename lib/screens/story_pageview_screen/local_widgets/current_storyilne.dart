@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:club/models/screendata.dart';
 import 'package:club/models/story.dart';
-import 'package:club/services/firestore.dart';
 import 'package:flutter/material.dart';
 
 class CurrentStoryLine extends StatefulWidget {
@@ -37,16 +36,17 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
   late int finalpassedseconds;
   @override
   void initState() {
-    print(widget.currentstory.watched);
-    FireStore().markstoryaswatched(
-      widget.currentstory.id,
-      widget.currentuserid,
-      context,
-      widget.currentuser,
-    );
+    // TODO:make the story watched
+
+    // FireStore().markstoryaswatched(
+    //   widget.currentstory.id,
+    //   widget.currentuserid,
+    //   context,
+    //   widget.currentuser,
+    // );
     finalpassedseconds = widget.currentstory.videotime == null
         ? 10000
-        : ((widget.currentstory.videotime! * 1000)+300).toInt();
+        : (widget.currentstory.videotime! * 1000).toInt();
     Timer.periodic(Duration(milliseconds: 10), (timer) {
       if (mounted) {
         if (widget.ispaused == false) {

@@ -39,6 +39,7 @@ class Camera {
       );
     }
     if (file != null) {
+      Navigator.pop(context);
       ResponsiveAddaptive.pushnavigate(
         context: context,
         screen: ConfirmStoryScreen(

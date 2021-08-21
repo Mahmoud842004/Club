@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:club/models/story.dart';
 import 'package:club/models/users.dart';
+import 'package:club/state_mangment/story_pause.dart';
+import 'package:provider/provider.dart';
 import 'local_widgets/local_widgets.dart';
 import 'package:club/services/firestore.dart';
 import 'package:club/widgets/app_scaffold.dart';
@@ -41,7 +43,6 @@ class _StoryPageState extends State<StoryPage> {
   List<Story> storieslist = [];
   bool haserror = false;
   Story? currentstory;
-  bool ispaused = false;
   @override
   void initState() {
     FireStore().getstorieslist(widget.user.stories).then((value) {
@@ -87,7 +88,7 @@ class _StoryPageState extends State<StoryPage> {
               }
             });
             if (currentstory!.videourl != null) {
-              ispaused = true;
+              Provider.of<StoryPause>(context, listen: false).switchpause(true);
             }
           }
         } else {
@@ -110,39 +111,26 @@ class _StoryPageState extends State<StoryPage> {
       body: SafeArea(
         child: GestureDetector(
           onLongPressStart: (details) {
-            setState(() {
-              ispaused = true;
-            });
+            Provider.of<StoryPause>(context, listen: false).switchpause(true);
           },
           onLongPressEnd: (details) {
-            setState(() {
-              ispaused = false;
-            });
+            Provider.of<StoryPause>(context, listen: false).switchpause(false);
           },
           child: Stack(
             children: [
               ImageOrVideo(
-                changepause: (bool newbool) {
-                  if (mounted) {
-                    setState(() {
-                      ispaused = newbool;
-                    });
-                  }
-                },
                 haserror: haserror,
                 currentstory: currentstory,
-                ispaused: ispaused,
-                changecurrentstory: (newstory) {
-                  if (mounted) {
-                    currentstory = newstory;
-                  }
-                },
               ),
               RightAndLeft(
                 changestory: (story) {
                   setState(() {
                     currentstory = story;
                   });
+                  if (currentstory!.videourl != null) {
+                    Provider.of<StoryPause>(context, listen: false)
+                        .switchpause(true);
+                  }
                 },
                 controller: widget.controller,
                 currentstory: currentstory != null ? currentstory : null,
@@ -160,10 +148,13 @@ class _StoryPageState extends State<StoryPage> {
                     setState(() {
                       currentstory = story;
                     });
+                    if (currentstory!.videourl != null) {
+                      Provider.of<StoryPause>(context, listen: false)
+                          .switchpause(true);
+                    }
                   }
                 },
                 storieslenght: widget.user.stories.length,
-                ispaused: ispaused,
                 userindex: widget.index,
                 userslist: widget.userslist,
                 controller: widget.controller,
@@ -176,7 +167,6 @@ class _StoryPageState extends State<StoryPage> {
                 currentstory: currentstory != null ? currentstory : null,
               ),
               widget.currentuser
-                  //TODO: make watching text
                   ? currentstory == null
                       ? SizedBox.shrink()
                       : WatchesIndicator(

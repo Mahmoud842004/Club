@@ -18,20 +18,20 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    ScreenData screenData = ResponsiveAddaptive.screendata(context);
+    ScreenData screendata = ResponsiveAddaptive.screendata(context);
     User? provider = Provider.of<User?>(context);
     return AppScaffold(
       body: SafeArea(
         child: Column(
           children: [
-            HomePageAppBar(screendata: screenData),
+            HomePageAppBar(screendata: screendata),
             Padding(
-              padding: EdgeInsets.all(screenData.screensize.width * 0.05),
+              padding: EdgeInsets.all(screendata.screensize.width * 0.05),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   StoryText(),
-                  StoryListView(userprovider: provider, screendata: screenData),
+                  StoryListView(userprovider: provider, screendata: screendata),
                 ],
               ),
             ),

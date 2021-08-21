@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:club/screens/story_pageview_screen/story_page.dart';
 import 'package:club/services/responsive_addaptive.dart';
+import 'package:club/state_mangment/story_pause.dart';
+import 'package:provider/provider.dart';
 import 'story_widget.dart';
 import 'package:club/models/screendata.dart';
 import 'package:club/models/story.dart';
@@ -24,7 +26,7 @@ class _CurrentUserStoryAvatarState extends State<CurrentUserStoryAvatar> {
   Story? story;
   @override
   void initState() {
-    //TODO:check case when adding a story while the last story is watched 
+    //TODO:check case when adding a story while the last story is watched
     streamSubscription =
         FireStore(id: widget.user.stories.last).storystream.listen((event) {
       // ignore: unnecessary_null_comparison
@@ -55,8 +57,14 @@ class _CurrentUserStoryAvatarState extends State<CurrentUserStoryAvatar> {
         screendata: widget.screendata,
         ontap: () {
           ResponsiveAddaptive.pushnavigate(
-              context: context,
-              screen: StoryPage.currentuser(user: widget.user,));
+            context: context,
+            screen: ChangeNotifierProvider<StoryPause>.value(
+              value: StoryPause(),
+              child: StoryPage.currentuser(
+                user: widget.user,
+              ),
+            ),
+          );
         },
         laststory: story,
       );

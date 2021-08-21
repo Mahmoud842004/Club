@@ -10,17 +10,18 @@ import 'package:flutter/material.dart';
 class ImageOrVideo extends StatelessWidget {
   final bool haserror;
   final Story? currentstory;
-  final Function(Story) changecurrentstory;
-  final bool ispaused;
-  final Function(bool) changepause;
 
   ImageOrVideo({
     required this.haserror,
     required this.currentstory,
-    required this.changecurrentstory,
-    required this.ispaused,
-    required this.changepause,
   });
+
+  StoryVideoPlayer storyvideoplayer(ScreenData screendata) {
+    return StoryVideoPlayer(
+      screendata: screendata,
+      currentstory: currentstory!,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +52,9 @@ class ImageOrVideo extends StatelessWidget {
                       fit: BoxFit.fill,
                     )
                   : Align(
-                    alignment: Alignment.center,
-                    child: StoryVideoPlayer(
-                        changepause: changepause,
-                        currentstory: currentstory!,
-                        ispaused: ispaused,
-                      ),
-                  ),
+                      alignment: Alignment.center,
+                      child: storyvideoplayer(screendata),
+                    ),
     );
   }
 }
