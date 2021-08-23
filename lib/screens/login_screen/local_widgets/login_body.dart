@@ -113,7 +113,6 @@ class _LoginBodyState extends State<LoginBody> {
                     color: Colors.grey[400],
                   ),
           ),
-          //TODO:fix the size error while the textfield animated
           UsernameTextField(
             authtype: authtype,
             node: usernamenode,

@@ -9,7 +9,7 @@ class AnimatedStory extends StatefulWidget {
 
 class _AnimatedStoryState extends State<AnimatedStory>
     with SingleTickerProviderStateMixin {
-  AnimationController? controller;
+ late AnimationController controller;
   @override
   void initState() {
     controller = AnimationController(
@@ -20,15 +20,15 @@ class _AnimatedStoryState extends State<AnimatedStory>
         milliseconds: 250,
       ),
     );
-    controller!.forward();
-    controller!.addListener(() {
+    controller.forward();
+    controller.addListener(() {
       setState(() {});
     });
-    controller!.addStatusListener((status) {
+    controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        controller!.reverse();
+        controller.reverse();
       } else if (status == AnimationStatus.dismissed) {
-        controller!.forward();
+        controller.forward();
       }
     });
     super.initState();
@@ -36,7 +36,7 @@ class _AnimatedStoryState extends State<AnimatedStory>
 
   @override
   void dispose() {
-    controller!.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -49,7 +49,7 @@ class _AnimatedStoryState extends State<AnimatedStory>
         bottom: screendata.screensize.height * 0.05,
       ),
       child: Opacity(
-        opacity: controller!.value,
+        opacity: controller.value,
         child: CircleAvatar(
           radius: 33,
           backgroundColor: Colors.grey[350],

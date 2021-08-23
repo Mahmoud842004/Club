@@ -24,8 +24,9 @@ class BottomRow extends StatelessWidget {
     //TODO:add send messages feature
     return Positioned(
       bottom: bottompadding + screendata.screensize.height * 0.005,
-      right: screendata.screensize.width * 0.05,
-      left: screendata.screensize.width * 0.05,
+      right: screendata.screensize.width * 0.02,
+      left: screendata.screensize.width * 0.02,
+      height: screendata.screensize.height*0.07,
       child: Row(
         children: [
           Expanded(

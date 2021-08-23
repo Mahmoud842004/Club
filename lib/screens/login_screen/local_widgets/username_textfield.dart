@@ -14,17 +14,10 @@ class UsernameTextField extends StatelessWidget {
       {required this.authtype, required this.node, required this.controller});
   @override
   Widget build(BuildContext context) {
-    var screendata = ResponsiveAddaptive.screendata(context);
-    return AnimatedContainer(
-      height: authtype == AuthType.login
-          ? 0.0
-          : screendata.screentype == ScreenType.landscape
-              ? screendata.screensize.height * 0.3
-              : screendata.screensize.height * 0.16,
-      duration: Duration(milliseconds: 80),
-      child: LoginTextField(
+    if (authtype == AuthType.signin) {
+      return LoginTextField(
         validator: (value) {
-          if (value!.trim().length==0) {
+          if (value!.trim().length == 0) {
             return 'The user name mustn,t be nothing';
           }
           return null;
@@ -44,7 +37,9 @@ class UsernameTextField extends StatelessWidget {
                 Icons.person,
                 color: Colors.grey[400],
               ),
-      ),
-    );
+      );
+    } else {
+      return SizedBox.shrink();
+    }
   }
 }

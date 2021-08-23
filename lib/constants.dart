@@ -97,7 +97,7 @@ InputDecoration storydecoration = InputDecoration(
     ),
   ),
   enabledBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(22),
+    borderRadius: BorderRadius.circular(20),
     borderSide: BorderSide(
       color: Color.fromRGBO(246, 249, 248, 1),
     ),

@@ -84,15 +84,13 @@ class _StoryListViewState extends State<StoryListView> {
     if (usersidslist == null) {
       return Container(
         padding: EdgeInsets.symmetric(
-            vertical: widget.screendata.screensize.height * 0.03),
+          vertical: widget.screendata.screensize.height * 0.03,
+        ),
         width: widget.screendata.screensize.width,
         height: widget.screendata.screensize.height * 0.15,
-        child: ListView.builder(
+        child: ListView(
           scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return AnimatedStory();
-          },
-          itemCount: 10,
+          children: List.generate(10, (index) => AnimatedStory()),
         ),
       );
     } else if (usersidslist!.isEmpty) {
@@ -115,7 +113,8 @@ class _StoryListViewState extends State<StoryListView> {
     } else {
       return Container(
         padding: EdgeInsets.symmetric(
-            vertical: widget.screendata.screensize.height * 0.03),
+          vertical: widget.screendata.screensize.height * 0.03,
+        ),
         width: widget.screendata.screensize.width,
         height: landscapecheck
             ? widget.screendata.screensize.height * 0.3
