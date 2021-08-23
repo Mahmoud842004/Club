@@ -3,7 +3,6 @@
 *.log
 *.pyc
 *.swp
-*.plist
 .DS_Store
 .atom/
 .buildlog/
@@ -35,7 +34,6 @@
 
 # Web related
 lib/generated_plugin_registrant.dart
-*.html
 
 # Symbolication related
 app.*.symbols
@@ -47,4 +45,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-*.xml
