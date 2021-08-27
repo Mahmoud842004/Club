@@ -1,5 +1,4 @@
 import 'package:club/models/auth_type.dart';
-import 'package:club/models/screendata.dart';
 import 'package:club/screens/login_screen/local_widgets/login_textfield.dart';
 import 'package:club/services/responsive_addaptive.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +15,7 @@ class UsernameTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     if (authtype == AuthType.signin) {
       return LoginTextField(
+        password: false,
         validator: (value) {
           if (value!.trim().length == 0) {
             return 'The user name mustn,t be nothing';

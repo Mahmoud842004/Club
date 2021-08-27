@@ -101,7 +101,12 @@ class FireStore {
             .doc(storyid)
             .collection('watches')
             .doc(currentuserid)
-            .set({});
+            .set(
+          {},
+          SetOptions(
+            merge: true,
+          ),
+        );
       }
     } catch (e) {
       String error = await ResponsiveAddaptive.translate(context, e.toString());

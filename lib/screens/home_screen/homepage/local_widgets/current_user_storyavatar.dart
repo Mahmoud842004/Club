@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:club/screens/story_pageview_screen/story_page.dart';
 import 'package:club/services/responsive_addaptive.dart';
-import 'package:club/state_mangment/story_pause.dart';
+import 'package:club/providers/story_pause.dart';
 import 'package:provider/provider.dart';
 import 'story_widget.dart';
 import 'package:club/models/screendata.dart';

@@ -13,6 +13,8 @@ class LoginButton extends StatefulWidget {
   final String email;
   final String password;
   final String username;
+  final double width;
+  final double height;
 
   const LoginButton({
     required this.authtype,
@@ -20,6 +22,8 @@ class LoginButton extends StatefulWidget {
     required this.password,
     required this.formkey,
     required this.username,
+    required this.width,
+    required this.height,
   });
 
   @override
@@ -30,16 +34,16 @@ class _LoginButtonState extends State<LoginButton> {
   bool isloading = false;
   @override
   Widget build(BuildContext context) {
-    var screendata = ResponsiveAddaptive.screendata(context);
-    var landscapecondition =
-        screendata.screentype == ScreenType.landscape ? true : false;
+    ScreenType screentype = ResponsiveAddaptive.screendata(context).screentype;
+    var landscapecondition = screentype == ScreenType.landscape ? true : false;
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Align(
           child: InkWell(
             onTap: () => Auth().authfunction(
-              username:widget.username,
+              username: widget.username,
               authType: widget.authtype,
               email: widget.email,
               password: widget.password,
@@ -55,33 +59,35 @@ class _LoginButtonState extends State<LoginButton> {
               alignment: Alignment.center,
               width: isloading
                   ? landscapecondition
-                      ? screendata.screensize.width * 0.1
-                      : screendata.screensize.width * 0.15
-                  : screendata.screensize.width * 0.7,
+                      ? widget.width * 0.1
+                      : widget.width * 0.15
+                  : widget.width * 0.7,
               duration: Duration(milliseconds: 250),
               decoration: BoxDecoration(
                 color: theme['black'],
                 borderRadius: BorderRadius.circular(40),
               ),
-              height: screendata.screentype == ScreenType.landscape
-                  ? screendata.screensize.height * 0.12
-                  : screendata.screensize.height * 0.06,
+              height: landscapecondition
+                  ? widget.height * 0.12
+                  : widget.height * 0.06,
               child: isloading
                   ? Container(
                       width: landscapecondition
-                          ? screendata.screensize.width * 0.04
-                          : screendata.screensize.width * 0.055,
+                          ? widget.width * 0.04
+                          : widget.width * 0.055,
                       height: landscapecondition
-                          ? screendata.screensize.height * 0.065
-                          : screendata.screensize.height * 0.03,
+                          ? widget.height * 0.065
+                          : widget.height * 0.03,
                       child: CircularProgressIndicator.adaptive(
                         backgroundColor: theme['white'],
                         valueColor: AlwaysStoppedAnimation(theme['black']),
                       ),
                     )
                   : ResponsiveAddaptive.isios()
-                      ? Icon(CupertinoIcons.checkmark_alt,
-                          color: theme['white'])
+                      ? Icon(
+                          CupertinoIcons.checkmark_alt,
+                          color: theme['white'],
+                        )
                       : Icon(Icons.done, color: theme['white']),
             ),
           ),

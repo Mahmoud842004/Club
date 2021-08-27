@@ -1,7 +1,7 @@
 import 'package:club/constants.dart';
 import 'package:club/models/screendata.dart';
 import 'package:club/models/story.dart';
-import 'package:club/state_mangment/story_pause.dart';
+import 'package:club/providers/story_pause.dart';
 import 'package:club/widgets/app_circular_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

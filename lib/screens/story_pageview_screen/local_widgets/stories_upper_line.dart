@@ -1,7 +1,7 @@
 import 'package:club/models/screendata.dart';
 import 'package:club/models/story.dart';
 import 'package:club/services/responsive_addaptive.dart';
-import 'package:club/state_mangment/story_pause.dart';
+import 'package:club/providers/story_pause.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

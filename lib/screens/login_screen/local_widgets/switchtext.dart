@@ -11,6 +11,7 @@ class SwitchText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+    
       onTap: () {
         if (authtype == AuthType.login) {
           setstate(AuthType.signin);

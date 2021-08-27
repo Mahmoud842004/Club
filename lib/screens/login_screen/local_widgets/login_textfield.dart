@@ -14,7 +14,9 @@ class LoginTextField extends StatelessWidget {
   final TextEditingController controller;
   final AuthType authType;
   final FocusNode? nextnode;
+  final Function(bool)? suffixfunction;
   final String? Function(String?) validator;
+  final bool password;
 
   const LoginTextField({
     required this.text,
@@ -25,6 +27,8 @@ class LoginTextField extends StatelessWidget {
     required this.controller,
     required this.authType,
     required this.validator,
+    required this.password,
+    this.suffixfunction,
     this.nextnode,
   });
   @override
@@ -39,9 +43,11 @@ class LoginTextField extends StatelessWidget {
           style: textstyles['login screen style'],
         ).tr(),
         AppTextFormField(
+          suffixfunction: suffixfunction,
           validator: validator,
           focusNode: focusNode,
           obscure: obscure,
+          password: password,
           controller: controller,
           nextnode: nextnode,
           hinttext: hinttext,

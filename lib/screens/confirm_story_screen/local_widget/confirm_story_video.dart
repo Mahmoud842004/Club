@@ -11,10 +11,11 @@ class ConfirmStoryVideo extends StatefulWidget {
   final ScreenData screendata;
   final Function(int secounds) getvideoduration;
 
-  ConfirmStoryVideo(
-      {required this.file,
-      required this.screendata,
-      required this.getvideoduration});
+  ConfirmStoryVideo({
+    required this.file,
+    required this.screendata,
+    required this.getvideoduration,
+  });
   @override
   _ConfirmStoryVideoState createState() => _ConfirmStoryVideoState();
 }

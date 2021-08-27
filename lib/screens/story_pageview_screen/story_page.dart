@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:club/models/story.dart';
 import 'package:club/models/users.dart';
-import 'package:club/state_mangment/story_pause.dart';
+import 'package:club/providers/story_pause.dart';
 import 'package:provider/provider.dart';
 import 'local_widgets/local_widgets.dart';
 import 'package:club/services/firestore.dart';
@@ -105,8 +105,9 @@ class _StoryPageState extends State<StoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final bottompadding = MediaQuery.of(context).viewPadding.bottom;
+    final bottompadding = MediaQuery.of(context).viewInsets.bottom;
     return AppScaffold(
+      resizeToAvoidBottomInset: false,
       color: Colors.grey[800],
       body: SafeArea(
         child: GestureDetector(

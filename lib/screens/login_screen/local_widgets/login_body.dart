@@ -48,113 +48,133 @@ class _LoginBodyState extends State<LoginBody> {
 
   @override
   Widget build(BuildContext context) {
-    var screendata = ResponsiveAddaptive.screendata(context);
-    var landscapecondition =
-        screendata.screentype == ScreenType.landscape ? true : false;
+    ScreenType screentype = ResponsiveAddaptive.screendata(context).screentype;
+    var isweb = screentype == ScreenType.web ? true : false;
+    var landscapecondition = screentype == ScreenType.landscape ? true : false;
     editusernamewhilelogin();
     return Form(
       key: formkey,
-      child: ListView(
-        padding: EdgeInsets.only(
-          top: screendata.screensize.height * 0.15,
-          left: screendata.screensize.width * 0.04,
-          right: screendata.screensize.width * 0.04,
-        ),
-        children: [
-          Align(
-            child: TitleText(authtype: authtype),
-            alignment: Alignment.topCenter,
-          ),
-          LoginTextField(
-            validator: (value) {
-              if (value!.contains('@') && value.endsWith('.com')) {
-                return null;
-              }
-              return 'This email is badly formated';
-            },
-            nextnode: passwordnode,
-            text: 'email',
-            authType: authtype,
-            focusNode: emailnode,
-            controller: emailcontroller,
-            hinttext: 'email hint text',
-            obscure: false,
-            icon: ResponsiveAddaptive.isios()
-                ? Icon(
-                    CupertinoIcons.mail,
-                    color: Colors.grey[400],
-                  )
-                : Icon(
-                    Icons.email,
-                    color: Colors.grey[400],
-                  ),
-          ),
-          LoginTextField(
-            validator: (value) {
-              if (value!.split('').length < 4) {
-                return 'This passowrd is too short';
-              }
-              return null;
-            },
-            nextnode: authtype == AuthType.login ? null : usernamenode,
-            text: 'password',
-            authType: authtype,
-            focusNode: passwordnode,
-            controller: passwordcontroller,
-            hinttext: 'password hint text',
-            obscure: true,
-            icon: ResponsiveAddaptive.isios()
-                ? Icon(
-                    CupertinoIcons.lock_fill,
-                    color: Colors.grey[400],
-                  )
-                : Icon(
-                    Icons.lock,
-                    color: Colors.grey[400],
-                  ),
-          ),
-          UsernameTextField(
-            authtype: authtype,
-            node: usernamenode,
-            controller: usernamecontroller,
-          ),
-          SizedBox(
-            height: landscapecondition
-                ? screendata.screensize.height * 0.05
-                : screendata.screensize.height * 0.02,
-          ),
-          LoginButton(
-            authtype: authtype,
-            formkey: formkey,
-            email: emailcontroller.text,
-            password: passwordcontroller.text,
-            username: usernamecontroller.text,
-          ),
-          SizedBox(
-            height: landscapecondition
-                ? screendata.screensize.height * 0.1
-                : screendata.screensize.height * 0.04,
-          ),
-          ExternalSigninRow(),
-          SizedBox(
-              height: landscapecondition
-                  ? screendata.screensize.height * 0.08
-                  : screendata.screensize.height * 0.04),
-          SwitchText(
-            authtype: authtype,
-            setstate: (newauthtype) {
-              setState(
-                () {
-                  authtype = newauthtype;
-                  emailcontroller = TextEditingController();
-                  passwordcontroller = TextEditingController();
-                  usernamecontroller = TextEditingController();
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          final double height = constraints.maxHeight;
+          final double width = constraints.maxWidth;
+          return ListView(
+            padding: EdgeInsets.only(
+              top:isweb?height*0.1: height * 0.15,
+              left: width * 0.04,
+              right: width * 0.04,
+            ),
+            children: [
+              Align(
+                child: TitleText(authtype: authtype),
+                alignment: Alignment.topCenter,
+              ),
+              LoginTextField(
+                validator: (value) {
+                  if (value!.contains('@') && value.endsWith('.com')) {
+                    return null;
+                  }
+                  return 'This email is badly formated';
                 },
-              );
-            },
-          ),
-          SizedBox(height: screendata.screensize.height*0.1),
-        ],
+                nextnode: passwordnode,
+                text: 'email',
+                authType: authtype,
+                focusNode: emailnode,
+                controller: emailcontroller,
+                hinttext: 'email hint text',
+                obscure: false,
+                icon: ResponsiveAddaptive.isios()
+                    ? Icon(
+                        CupertinoIcons.mail,
+                        color: Colors.grey[400],
+                      )
+                    : Icon(
+                        Icons.email,
+                        color: Colors.grey[400],
+                      ),
+                      password: false,
+              ),
+              Builder(
+                builder: (context) {
+                  var obsure = false;
+                  return LoginTextField(
+                    suffixfunction:(bool newbool){
+                      setState(() {
+                        obsure=newbool;
+                      });
+                    },
+                    password: true,
+                    validator: (value) {
+                      if (value!.split('').length < 4) {
+                        return 'This passowrd is too short';
+                      }
+                      return null;
+                    },
+                    nextnode: authtype == AuthType.login ? null : usernamenode,
+                    text: 'password',
+                    authType: authtype,
+                    focusNode: passwordnode,
+                    controller: passwordcontroller,
+                    hinttext: 'password hint text',
+                    obscure: obsure,
+                    icon: ResponsiveAddaptive.isios()
+                        ? Icon(
+                            CupertinoIcons.lock_fill,
+                            color: Colors.grey[400],
+                          )
+                        : Icon(
+                            Icons.lock,
+                            color: Colors.grey[400],
+                          ),
+                  );
+                }
+              ),
+              UsernameTextField(
+                authtype: authtype,
+                node: usernamenode,
+                controller: usernamecontroller,
+              ),
+              SizedBox(
+                height: landscapecondition
+                    ? height * 0.05
+                    : isweb
+                        ? height * 0.08
+                        : height * 0.02,
+              ),
+              LoginButton(
+                authtype: authtype,
+                formkey: formkey,
+                email: emailcontroller.text,
+                password: passwordcontroller.text,
+                username: usernamecontroller.text,
+                width: width,
+                height: height,
+              ),
+              SizedBox(
+                height: landscapecondition ? height * 0.1 :isweb?height*0.08: height * 0.04,
+              ),
+              ExternalSigninRow(),
+              SizedBox(
+                height: landscapecondition ? height * 0.08 :isweb?height*0.08: height * 0.04,
+              ),
+              SwitchText(
+                authtype: authtype,
+                setstate: (newauthtype) {
+                  setState(
+                    () {
+                      authtype = newauthtype;
+                      emailcontroller = TextEditingController();
+                      passwordcontroller = TextEditingController();
+                      usernamecontroller = TextEditingController();
+                    },
+                  );
+                },
+              ),
+              //TODO:use app sizedbox
+              SizedBox(height: height * 0.1),
+            ],
+          );
+        },
       ),
     );
   }

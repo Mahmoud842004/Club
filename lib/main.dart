@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:auto_direction/auto_direction.dart';
 import 'package:club/models/users.dart';
+import 'package:club/providers/current_page.dart';
 import 'package:club/screens/whole_screen.dart';
 import 'package:club/services/auth.dart';
 import 'package:club/services/firestore.dart';
@@ -35,7 +36,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //TODO:enable the app for the web
+    //TODO:fix web app version sizes
     User? user = Auth().getcurrentuser();
     return MultiProvider(
       providers: [
@@ -46,8 +47,10 @@ class MyApp extends StatelessWidget {
               : FireStore(id: user.uid).userstream,
           initialData: null,
         ),
+        ChangeNotifierProvider<CurrentPageProvider>.value(value: CurrentPageProvider()),
       ],
       child: Builder(
+        
         builder: (context) {
           var text = context.locale == Locale('en') ? 'a' : 'ا';
           return AutoDirection(

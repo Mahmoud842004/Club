@@ -11,7 +11,9 @@ class AppTextFormField extends StatelessWidget {
   final bool obscure;
   final FocusNode focusNode;
   final FocusNode? nextnode;
+  final Function(bool)? suffixfunction;
   final String? Function(String?) validator;
+  final bool password;
 
   AppTextFormField({
     required this.hinttext,
@@ -20,11 +22,14 @@ class AppTextFormField extends StatelessWidget {
     required this.icon,
     required this.focusNode,
     required this.validator,
+    required this.password,
+    this.suffixfunction,
     this.nextnode,
   });
 
   @override
   Widget build(BuildContext context) {
+    //TODO:fix obscure bug
     if (ResponsiveAddaptive.isios()) {
       return CupertinoTextFormFieldRow(
         placeholder: hinttext.tr(),
@@ -57,6 +62,17 @@ class AppTextFormField extends StatelessWidget {
         decoration: formfielddecoration.copyWith(
           prefixIcon: icon,
           hintText: hinttext.tr(),
+          suffixIcon: password
+              ? InkWell(
+                  onTap: () {
+                    if (password) {
+                      suffixfunction!(obscure == true ? false : true);
+                    }
+                  },
+                  child:
+                      Icon(obscure ? Icons.visibility : Icons.visibility_off),
+                )
+              : SizedBox.shrink(),
         ),
       );
     }

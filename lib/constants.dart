@@ -12,6 +12,13 @@ const Map<String, Color> theme = const {
 };
 
 Map textstyles = {
+    'huge': GoogleFonts.merriweather(
+    textStyle: TextStyle(
+      fontSize: 150,
+      fontWeight: FontWeight.bold,
+      color: theme['black'],
+    ),
+  ),
   'large': GoogleFonts.merriweather(
     textStyle: TextStyle(
       fontSize: 35,

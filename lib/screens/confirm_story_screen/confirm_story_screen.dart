@@ -51,8 +51,9 @@ class _ConfirmStoryScreenState extends State<ConfirmStoryScreen> {
     ScreenData screendata = ResponsiveAddaptive.screendata(context);
     bool islandscape =
         screendata.screentype == ScreenType.landscape ? true : false;
-    var bottompadding = MediaQuery.of(context).viewPadding.bottom;
+    var bottompadding = MediaQuery.of(context).viewInsets.bottom;
     return AppScaffold(
+      resizeToAvoidBottomInset:false,
       appbar: theAppBar(
           title: Container(),
           color: theme['white'],
@@ -104,7 +105,6 @@ class _ConfirmStoryScreenState extends State<ConfirmStoryScreen> {
                   Positioned(
                     right: screendata.screensize.width * 0.03,
                     left: screendata.screensize.width * 0.03,
-                    top: bottompadding != 0.0 ? 0.0 : null,
                     bottom: bottompadding + 10,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,

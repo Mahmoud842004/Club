@@ -7,17 +7,20 @@ class AppScaffold extends StatelessWidget {
   final appbar;
   final Widget? bottomnavigationbar;
   final Color? color;
+  final bool resizeToAvoidBottomInset;
 
   const AppScaffold({
     required this.body,
     this.appbar,
     this.color,
     this.bottomnavigationbar,
+    this.resizeToAvoidBottomInset = true,
   });
   @override
   Widget build(BuildContext context) {
     if (ResponsiveAddaptive.isios()) {
       return CupertinoPageScaffold(
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         child: Scaffold(
           body: body,
           bottomNavigationBar: bottomnavigationbar,
@@ -27,6 +30,7 @@ class AppScaffold extends StatelessWidget {
       );
     } else {
       return Scaffold(
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         body: body,
         appBar: appbar,
         backgroundColor: color,

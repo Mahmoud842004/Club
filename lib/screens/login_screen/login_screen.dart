@@ -16,14 +16,12 @@ class LoginScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    flex: 3,
-                    child: Image.asset(
-                      'assets/logo.jfif',
-                      fit: BoxFit.fill,
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text('Club',style: textstyles['huge'],),
                     ),
                   ),
                   Expanded(
-                    flex: 2,
                     child: LoginBody(screendata: screendata),
                   ),
                 ],

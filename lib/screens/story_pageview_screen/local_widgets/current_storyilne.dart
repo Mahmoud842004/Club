@@ -36,7 +36,7 @@ class _CurrentStoryLineState extends State<CurrentStoryLine> {
   late int finalpassedseconds;
   @override
   void initState() {
-    // TODO:make the story watched
+   //TODO:make the story seened
 
     // FireStore().markstoryaswatched(
     //   widget.currentstory.id,
