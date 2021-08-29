@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:auto_direction/auto_direction.dart';
 import 'package:club/models/users.dart';
 import 'package:club/providers/current_page.dart';
+import 'package:club/providers/obsure_password.dart';
 import 'package:club/screens/whole_screen.dart';
 import 'package:club/services/auth.dart';
 import 'package:club/services/firestore.dart';
@@ -47,10 +48,14 @@ class MyApp extends StatelessWidget {
               : FireStore(id: user.uid).userstream,
           initialData: null,
         ),
-        ChangeNotifierProvider<CurrentPageProvider>.value(value: CurrentPageProvider()),
+        ChangeNotifierProvider<CurrentPageProvider>.value(
+          value: CurrentPageProvider(),
+        ),
+        ChangeNotifierProvider<ObsureProvider>.value(
+          value: ObsureProvider(),
+        ),
       ],
       child: Builder(
-        
         builder: (context) {
           var text = context.locale == Locale('en') ? 'a' : 'ا';
           return AutoDirection(

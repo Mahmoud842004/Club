@@ -1,5 +1,6 @@
 import 'package:club/models/auth_type.dart';
 import 'package:club/models/screendata.dart';
+import 'package:club/providers/obsure_password.dart';
 import 'package:club/screens/login_screen/local_widgets/external_signin_row.dart';
 import 'package:club/screens/login_screen/local_widgets/login_button.dart';
 import 'package:club/screens/login_screen/local_widgets/switchtext.dart';
@@ -9,6 +10,7 @@ import 'package:club/screens/login_screen/local_widgets/username_textfield.dart'
 import 'package:club/services/responsive_addaptive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginBody extends StatefulWidget {
   final ScreenData screendata;
@@ -60,7 +62,7 @@ class _LoginBodyState extends State<LoginBody> {
           final double width = constraints.maxWidth;
           return ListView(
             padding: EdgeInsets.only(
-              top:isweb?height*0.1: height * 0.15,
+              top: isweb ? height * 0.1 : height * 0.15,
               left: width * 0.04,
               right: width * 0.04,
             ),
@@ -92,43 +94,35 @@ class _LoginBodyState extends State<LoginBody> {
                         Icons.email,
                         color: Colors.grey[400],
                       ),
-                      password: false,
+                password: false,
               ),
-              Builder(
-                builder: (context) {
-                  var obsure = false;
-                  return LoginTextField(
-                    suffixfunction:(bool newbool){
-                      setState(() {
-                        obsure=newbool;
-                      });
-                    },
-                    password: true,
-                    validator: (value) {
-                      if (value!.split('').length < 4) {
-                        return 'This passowrd is too short';
-                      }
-                      return null;
-                    },
-                    nextnode: authtype == AuthType.login ? null : usernamenode,
-                    text: 'password',
-                    authType: authtype,
-                    focusNode: passwordnode,
-                    controller: passwordcontroller,
-                    hinttext: 'password hint text',
-                    obscure: obsure,
-                    icon: ResponsiveAddaptive.isios()
-                        ? Icon(
-                            CupertinoIcons.lock_fill,
-                            color: Colors.grey[400],
-                          )
-                        : Icon(
-                            Icons.lock,
-                            color: Colors.grey[400],
-                          ),
-                  );
-                }
-              ),
+              Consumer<ObsureProvider>(builder: (context, obsureprovider, widget) {
+                return LoginTextField(
+                  password: true,
+                  validator: (value) {
+                    if (value!.split('').length < 4) {
+                      return 'This passowrd is too short';
+                    }
+                    return null;
+                  },
+                  nextnode: authtype == AuthType.login ? null : usernamenode,
+                  text: 'password',
+                  authType: authtype,
+                  focusNode: passwordnode,
+                  controller: passwordcontroller,
+                  hinttext: 'password hint text',
+                  obscure: obsureprovider.obsure,
+                  icon: ResponsiveAddaptive.isios()
+                      ? Icon(
+                          CupertinoIcons.lock_fill,
+                          color: Colors.grey[400],
+                        )
+                      : Icon(
+                          Icons.lock,
+                          color: Colors.grey[400],
+                        ),
+                );
+              }),
               UsernameTextField(
                 authtype: authtype,
                 node: usernamenode,
@@ -151,11 +145,19 @@ class _LoginBodyState extends State<LoginBody> {
                 height: height,
               ),
               SizedBox(
-                height: landscapecondition ? height * 0.1 :isweb?height*0.08: height * 0.04,
+                height: landscapecondition
+                    ? height * 0.1
+                    : isweb
+                        ? height * 0.08
+                        : height * 0.04,
               ),
               ExternalSigninRow(),
               SizedBox(
-                height: landscapecondition ? height * 0.08 :isweb?height*0.08: height * 0.04,
+                height: landscapecondition
+                    ? height * 0.08
+                    : isweb
+                        ? height * 0.08
+                        : height * 0.04,
               ),
               SwitchText(
                 authtype: authtype,

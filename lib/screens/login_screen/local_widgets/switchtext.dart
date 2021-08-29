@@ -10,8 +10,7 @@ class SwitchText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-    
+    return GestureDetector(
       onTap: () {
         if (authtype == AuthType.login) {
           setstate(AuthType.signin);
@@ -23,7 +22,7 @@ class SwitchText extends StatelessWidget {
         authtype == AuthType.login
             ? 'sign in switch text'
             : 'login switch text',
-            textAlign: TextAlign.center,
+        textAlign: TextAlign.center,
         style: TextStyle(color: theme['black']),
       ).tr(),
     );

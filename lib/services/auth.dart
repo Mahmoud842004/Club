@@ -75,16 +75,15 @@ class Auth {
     required String password,
     required String? username,
   }) async {
-    print(email);
     var user = await _auth.createUserWithEmailAndPassword(
-        email: email.trim(), password: password.trim());
+        email: email, password: password);
     await FireStore()
         .adduser(username: username.toString(), userid: user.user!.uid);
   }
   // login function
 
   Future _login({required String email, required String password}) async {
-    await _auth.signInWithEmailAndPassword(email: email.trim(), password: password.trim());
+    await _auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
   //sign out function

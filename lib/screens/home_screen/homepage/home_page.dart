@@ -24,7 +24,9 @@ class _HomePageState extends State<HomePage>
       body: SafeArea(
         child: Column(
           children: [
-            HomePageAppBar(screendata: screendata),
+            screendata.screentype == ScreenType.web
+                ? SizedBox.shrink()
+                : HomePageAppBar(screendata: screendata),
             Padding(
               padding: EdgeInsets.all(screendata.screensize.width * 0.05),
               child: Column(

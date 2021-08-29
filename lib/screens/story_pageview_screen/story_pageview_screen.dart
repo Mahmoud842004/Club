@@ -1,5 +1,5 @@
-import 'package:club/screens/story_pageview_screen/story_page.dart';
 import 'package:club/providers/story_pause.dart';
+import 'package:club/screens/story_pageview_screen/story_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -54,23 +54,29 @@ class _StoriesLineState extends State<StoriesLine> {
   }
 
   List<Widget> storieslines(String currentuserid, ScreenData screendata) {
+  var  changecurrentstory = widget.changecurrentstory;
+  var storieslist = widget.storieslist;
+  var currentstory = widget.currentstory;
+  var controller = widget.controller;
+  var userindex = widget.userindex;
+  var userslist=  widget.userslist;
+  var currentuser = widget.currentuser;
     List<Widget> storieslines = [];
     for (var story in widget.storieslist) {
       if (widget.storieslist.indexOf(widget.currentstory) ==
           widget.storieslist.indexOf(story)) {
         storieslines.add(
-          Builder(builder: (context) {
-            var pauseprovider = Provider.of<StoryPause>(context);
+          Consumer<StoryPause>(builder: (context,pauseprovider,widget) {
             return CurrentStoryLine(
               screendata: screendata,
-              changecurrentstory: widget.changecurrentstory,
-              storieslist: widget.storieslist,
-              currentstory: widget.currentstory!,
-              controller: widget.controller,
-              userindex: widget.userindex,
-              userslist: widget.userslist,
+              changecurrentstory: changecurrentstory,
+              storieslist: storieslist,
+              currentstory: currentstory!,
+              controller: controller,
+              userindex: userindex,
+              userslist: userslist,
               currentuserid: currentuserid,
-              currentuser: widget.currentuser,
+              currentuser: currentuser,
               ispaused: pauseprovider.ispaused,
             );
           }),

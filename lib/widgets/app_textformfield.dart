@@ -1,8 +1,10 @@
 import 'package:club/constants.dart';
+import 'package:club/providers/obsure_password.dart';
 import 'package:club/services/responsive_addaptive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
 
 class AppTextFormField extends StatelessWidget {
   final Widget icon;
@@ -11,7 +13,6 @@ class AppTextFormField extends StatelessWidget {
   final bool obscure;
   final FocusNode focusNode;
   final FocusNode? nextnode;
-  final Function(bool)? suffixfunction;
   final String? Function(String?) validator;
   final bool password;
 
@@ -23,13 +24,11 @@ class AppTextFormField extends StatelessWidget {
     required this.focusNode,
     required this.validator,
     required this.password,
-    this.suffixfunction,
     this.nextnode,
   });
 
   @override
   Widget build(BuildContext context) {
-    //TODO:fix obscure bug
     if (ResponsiveAddaptive.isios()) {
       return CupertinoTextFormFieldRow(
         placeholder: hinttext.tr(),
@@ -64,13 +63,11 @@ class AppTextFormField extends StatelessWidget {
           hintText: hinttext.tr(),
           suffixIcon: password
               ? InkWell(
-                  onTap: () {
-                    if (password) {
-                      suffixfunction!(obscure == true ? false : true);
-                    }
+                  onTap: () {     
+                      Provider.of<ObsureProvider>(context,listen: false).switchobsure(obscure?false:true);
                   },
                   child:
-                      Icon(obscure ? Icons.visibility : Icons.visibility_off),
+                      Icon(obscure ?Icons.visibility_off  : Icons.visibility,color: theme['black'],),
                 )
               : SizedBox.shrink(),
         ),
