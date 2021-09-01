@@ -18,6 +18,7 @@ class ActionButton extends StatefulWidget {
     required this.content,
     required this.videoduration,
     required this.screendata,
+    required this.lastcontext,
   });
 
   final Users? user;
@@ -26,6 +27,7 @@ class ActionButton extends StatefulWidget {
   final String content;
   final int? videoduration;
   final ScreenData screendata;
+  final BuildContext lastcontext;
 
   @override
   _ActionButtonState createState() => _ActionButtonState();
@@ -50,6 +52,7 @@ class _ActionButtonState extends State<ActionButton> {
         },
         context: context,
         videotime: widget.videoduration,
+        lastcontext:widget.lastcontext,
       ),
       icon: isloading
           ? Container(

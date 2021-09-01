@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 class Camera {
   Future<void> pickstoryfile({
+    required BuildContext lastcontext,
     required BuildContext context,
     required String imagesource,
     required String filetype,
@@ -45,6 +46,7 @@ class Camera {
         screen: ConfirmStoryScreen(
           filetype: filetype,
           file: File(file.path),
+          lastcontext: lastcontext,
         ),
       );
     }

@@ -23,7 +23,7 @@ class CurrentUserStory extends StatelessWidget {
         ontap: () => showModalBottomSheet(
           context: context,
           builder: (context) {
-            return CameraButtomSheat();
+            return CameraButtomSheat(lastcontext: context);
           },
         ),
       );

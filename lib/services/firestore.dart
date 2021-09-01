@@ -122,6 +122,7 @@ class FireStore {
     required Function(bool) setstate,
     required BuildContext context,
     required int? videotime,
+    required BuildContext lastcontext,
   }) async {
     var connection = await Connectivity().checkConnectivity();
     if (connection != ConnectivityResult.none) {
@@ -135,13 +136,22 @@ class FireStore {
           'watched': false,
           'time': Timestamp.now(),
           'video time': videotime,
-        }).then((value) {
-          List newstorieslist = user.stories;
-          newstorieslist.add(storyid);
-          _users.doc(user.id).update({
-            'stories': newstorieslist,
-          });
-        });
+        }).then(
+          (value) {
+            List newstorieslist = user.stories;
+            newstorieslist.add(storyid);
+            _users.doc(user.id).update({
+              'stories': newstorieslist,
+            }).then(
+              (value) async {
+                var translate = await ResponsiveAddaptive.translate(
+                    context, 'The Story has been published');
+                ScaffoldMessenger.of(lastcontext)
+                    .showSnackBar(showsnackbar(translate));
+              },
+            );
+          },
+        );
       }).onError((error, stackTrace) async {
         var translate = await ResponsiveAddaptive.translate(
           context,

@@ -8,14 +8,22 @@ import 'package:flutter/material.dart';
 class CameraListTile extends StatelessWidget {
   final String imagesource;
   final String filetype;
+  final BuildContext lastcontext;
 
-  CameraListTile({required this.imagesource, required this.filetype});
-
+  CameraListTile(
+      {required this.imagesource,
+      required this.filetype,
+      required this.lastcontext});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Camera().pickstoryfile(context: context, imagesource: imagesource, filetype: filetype),
+      onTap: () => Camera().pickstoryfile(
+        context: context,
+        imagesource: imagesource,
+        filetype: filetype,
+        lastcontext: lastcontext,
+      ),
       child: ListTile(
         leading: Icon(
           imagesource == 'camera'

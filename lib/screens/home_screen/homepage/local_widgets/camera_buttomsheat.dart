@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CameraButtomSheat extends StatelessWidget {
+  final BuildContext lastcontext;
+  CameraButtomSheat({required this.lastcontext});
   @override
   Widget build(BuildContext context) {
     ScreenData screendata = ResponsiveAddaptive.screendata(context);
@@ -15,21 +17,25 @@ class CameraButtomSheat extends StatelessWidget {
           CameraListTile(
             imagesource: 'camera',
             filetype: 'photo',
+            lastcontext: lastcontext,
           ),
           SizedBox(height: screendata.screensize.height*0.01),
           CameraListTile(
             imagesource: 'camera',
             filetype: 'video',
+            lastcontext: lastcontext,
           ),
           SizedBox(height: screendata.screensize.height*0.01),
           CameraListTile(
             imagesource: 'gallery',
             filetype: 'photo',
+            lastcontext: lastcontext,
           ),
           SizedBox(height: screendata.screensize.height*0.01),
           CameraListTile(
             imagesource: 'gallery',
             filetype: 'video',
+            lastcontext: lastcontext,
           ),
         ],
       ),

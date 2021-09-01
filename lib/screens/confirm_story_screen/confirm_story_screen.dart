@@ -16,8 +16,9 @@ import 'package:provider/provider.dart';
 class ConfirmStoryScreen extends StatefulWidget {
   final File file;
   final String filetype;
+  final BuildContext lastcontext;
 
-  ConfirmStoryScreen({required this.filetype, required this.file});
+  ConfirmStoryScreen({required this.filetype, required this.file,required this.lastcontext});
 
   @override
   State<ConfirmStoryScreen> createState() => _ConfirmStoryScreenState();
@@ -117,6 +118,7 @@ class _ConfirmStoryScreenState extends State<ConfirmStoryScreen> {
                           content: controller.text,
                           videoduration: videoduration,
                           screendata: screendata,
+                          lastcontext:widget.lastcontext
                         ),
                       ],
                     ),
